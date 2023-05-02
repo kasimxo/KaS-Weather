@@ -17,7 +17,6 @@ import utilities.CSVreader;
 
 public class Main {
 	
-	
 	public static Main_Window mW;
 	
 	public static void main(String[] args) {

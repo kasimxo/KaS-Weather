@@ -16,8 +16,9 @@ public class Format {
 	public static List<String> rawDataToList(String rawData) throws FileNotFoundException {
 		
 		String[] splited = rawData.split(",");
-		
-		File test = new File(new File("").getAbsolutePath()+"/src/main/java/test.txt" );
+		String path = new File("").getAbsolutePath()+"/src/main/java/test.json";
+		path = 
+		File test = new File();
 		PrintStream stream = new PrintStream(test);
 		System.setOut(stream);
 		
@@ -29,9 +30,14 @@ public class Format {
 			output.add(string);
 		}
 		
-		for (String string : output) {
-			System.out.println(string);
+//		for (String string : output) {
+//			System.out.println(string);
+//		}
+		
+		for (int i = 0; i < rawData.length(); i++) {
+			System.out.print(rawData.charAt(i));
 		}
+		
 		stream.close();
 		return output;
 	}
