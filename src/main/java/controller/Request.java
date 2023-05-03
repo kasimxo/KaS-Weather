@@ -60,8 +60,8 @@ public class Request {
 			Scanner sc = new Scanner(urlCon.getInputStream());
 			String rawData="";
 			//Aquí hacemos un print en pantalla del contenido simplemente para ver que funciona
-			while(sc.hasNext()) {
-				rawData+=sc.next();
+			while(sc.hasNextLine()) {
+				rawData+=sc.nextLine() + "\n";
 			}
 			return rawData;
 		} catch (Exception e) {

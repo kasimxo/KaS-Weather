@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import controller.Request;
 import utilities.CSVreader;
 import utilities.Format;
+import utilities.JsonHandler;
 
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -17,12 +18,18 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import java.awt.Color;
+import javax.swing.ScrollPaneConstants;
 
 public class Main_Window extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txt_input;
-	private JTextArea txt_screen;
+	private JScrollPane screen;
+	private JLabel lbl_output;
 
 	/**
 	 * Launch the application.
@@ -63,7 +70,7 @@ public class Main_Window extends JFrame {
 					try {
 						munCode = CSVreader.munCode(mun);
 					} catch (Exception e1) {
-						txt_screen.setText("No se ha encontrado la ciudad " + mun);
+						lbl_output.setText("No se ha encontrado la ciudad " + mun);
 						e1.printStackTrace();
 					}
 					
@@ -82,17 +89,14 @@ public class Main_Window extends JFrame {
 					}
 					
 					txt_input.setText("");
+					lbl_output.setText(JsonHandler.getTemperatura());
 				} else {
-					txt_screen.setText("Introduce el nombre de un municipio.");
+					lbl_output.setText("Introduce el nombre de un municipio.");
 				}
 			}
 		});
 		btn_send.setBounds(12, 226, 117, 25);
 		contentPane.add(btn_send);
-		
-		txt_screen = new JTextArea();
-		txt_screen.setBounds(12, 12, 426, 100);
-		contentPane.add(txt_screen);
 		
 		txt_input = new JTextField();
 		txt_input.setBounds(133, 160, 233, 30);
@@ -107,5 +111,14 @@ public class Main_Window extends JFrame {
 		});
 		btn_cancel.setBounds(282, 214, 117, 25);
 		contentPane.add(btn_cancel);
+		
+		screen = new JScrollPane();
+		screen.setBounds(15, 10, 420, 125);
+		contentPane.add(screen);
+		
+		lbl_output = new JLabel("");
+		lbl_output.setOpaque(true);
+		screen.setViewportView(lbl_output);
+		lbl_output.setBackground(Color.WHITE);
 	}
 }

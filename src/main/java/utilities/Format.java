@@ -17,8 +17,8 @@ public class Format {
 		
 		String[] splited = rawData.split(",");
 		String path = new File("").getAbsolutePath()+"/src/main/java/test.json";
-		path = 
-		File test = new File();
+		path = OsPaths.cleanPath(path);
+		File test = new File(path);
 		PrintStream stream = new PrintStream(test);
 		System.setOut(stream);
 		
