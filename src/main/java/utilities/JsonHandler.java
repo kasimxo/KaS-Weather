@@ -12,10 +12,10 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 
 public class JsonHandler {
-
+	
+	public static String municipio="";
+	
 	public static void main(String[] args) {
-        
-    
     }
 	/**
 	 * This method gets the temperature from a JSON file
@@ -26,7 +26,6 @@ public class JsonHandler {
         JSONParser jsonParser = new JSONParser();
          
         try {
-        	String output="";
         	String path = OsPaths.cleanPath(new File("").getAbsolutePath() + "/src/main/java/test.json");
         	Reader reader = new FileReader(path);
         	Object obj = jsonParser.parse(reader);
@@ -37,7 +36,8 @@ public class JsonHandler {
         	 */
         	JSONArray array = new JSONArray(obj.toString());
 			JSONObject j = (JSONObject) array.get(0);
-			output+=j.get("nombre")+"\n";
+			municipio = j.get("nombre").toString();
+			String output2="<html><body><table><tr><th>Fecha: </th><th>Minima: </th><th>Maxima: </th></tr>";
 			JSONObject j2 = (JSONObject) j.get("prediccion");
 			JSONArray jA = (JSONArray) j2.get("dia");
 			
@@ -48,12 +48,10 @@ public class JsonHandler {
 				String min = j4.getString("minima"); 
 				String max = j4.getString("maxima");
 				f = f.substring(0,10);
-				System.out.println("Fecha: " + f);
-				System.out.println("Tª mínima: "+min);
-				System.out.println("Tª máxima: "+max);
-				output+="Fecha: " + f +"\nTª mínima: " + min + "\nTª máxima: " + max + "\n";
+				output2+="<tr><td>"+ f + "</td><td>" + min + "</td><td>" + max + "</td></tr>";
 			}
-			return output;
+			output2+="</table></body></html>";
+			return output2;
 			
         } catch (Exception e) {
             e.printStackTrace();

@@ -21,16 +21,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		
 		mW = new Main_Window();
 		mW.setVisible(true);
 		
-		
-		
-		/**
-		
-		
-		*/
 	}
 
 }
