@@ -3,7 +3,7 @@
  
  <h3><a href="https://www.aemet.es/es/portada">AEMET</a></h3>
  
- <b>AEMET</b> (Agencia Estatal de Meteorología) is the Spanish National Meteorology Agency. It has an oficial API (<a  href="https://www.aemet.es/es/datos_abiertos/AEMET_OpenData">AEMET OpenData</a>)to obtain every posible kind of   actual weather data (temperature, wind, humidity, waves...).<hr/>
+ <b>AEMET</b> (Agencia Estatal de Meteorología) is the Spanish National Meteorology Agency. It has an oficial API (<a  href="https://www.aemet.es/es/datos_abiertos/AEMET_OpenData">AEMET OpenData</a>) to obtain every posible kind of   actual weather data (temperature, wind, humidity, waves...).<hr/>
  
  <h3>MAEVEN</h3>
  
