@@ -1,9 +1,9 @@
 # KaS-Weather
  A weather app with a graphic interface. Uses AEMET API to get real, accurate data.
  
- <h3>AEMET</h3>
+ <h3>AEMET</h3><hr/>
  
- <h3>MAEVEN</h3>
+ <h3>MAEVEN</h3><hr/>
  
  <h6>Dependencies:</h6><br/>
  
