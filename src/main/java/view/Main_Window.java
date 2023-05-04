@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
+import javax.swing.SwingConstants;
 
 public class Main_Window extends JFrame {
 
@@ -56,7 +57,7 @@ public class Main_Window extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
 		setTitle("KaS-Weather");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 470, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -121,6 +122,7 @@ public class Main_Window extends JFrame {
 		contentPane.add(screen);
 		
 		lbl_output = new JLabel("");
+		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_output.setOpaque(true);
 		screen.setViewportView(lbl_output);
 		lbl_output.setBackground(Color.WHITE);
@@ -132,4 +134,14 @@ public class Main_Window extends JFrame {
 		lbl_municipio.setBounds(12, 149, 117, 25);
 		contentPane.add(lbl_municipio);
 	}
+	
+	/**
+	 * This method displays a string in the main window screen.
+	 * @param s
+	 */
+	public void setScreen(String s) {
+		lbl_output.setText(s);
+	}
+	
+	
 }
