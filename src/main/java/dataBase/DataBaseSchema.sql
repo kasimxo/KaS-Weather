@@ -1,0 +1,16 @@
+--Eliminate tables if, for some reason, they exist
+DROP TABLE IF EXISTS 'CODES';
+DROP TABLE IF EXISTS 'PRECIPITATION';
+DROP TABLE IF EXISTS 'SNOW';
+DROP TABLE IF EXISTS 'SKY';
+DROP TABLE IF EXISTS 'WIND';
+DROP TABLE IF EXISTS 'TEMPERATURE';
+DROP TABLE IF EXISTS 'HUMIDITY';
+
+--Create tables with their restrictions
+CREATE TABLE IF NOT EXISTS 'CODES' (
+  'Cod_mun' char(5) NOT NULL,
+  'Provincia' char(30) NOT NULL,
+  'Nombre' char(30) DEFAULT NULL,
+  PRIMARY KEY ('Cod_mun')
+) ;

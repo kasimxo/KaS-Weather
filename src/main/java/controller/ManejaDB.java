@@ -1,12 +1,15 @@
 package controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Scanner;
 
 import main.Main;
 
@@ -14,10 +17,13 @@ public class ManejaDB {
 	
 	private String dataBaseName;
 	private Connection c;
+	private Statement sent;
 	
 	public ManejaDB() throws IOException, SQLException {
 		checkActualDataBase();
 		this.c = DriverManager.getConnection("jdbc:sqlite:D:\\sqlite\\" + dataBaseName);
+		this.sent = c.createStatement();
+		createDataBaseSchema();
 	}
 	
 	
@@ -31,6 +37,7 @@ public class ManejaDB {
 	public File checkActualDataBase() throws IOException {
 		String[] splited = Calendar.getInstance().getTime().toString().split(" ");
 		String fileName = splited[0]+splited[2]+splited[5]+".db";
+		System.out.println("Buscamos archivo: " + fileName);
 		File dir = new File( new File("").getAbsoluteFile()+"/src/main/java/dataBase");
 		//Create a File Filter for .db files
 		FilenameFilter filter = new FilenameFilter() {
@@ -59,6 +66,14 @@ public class ManejaDB {
 			}
 			delete=file;
 		}
+		String oldName = delete.getName();
+		if(delete.delete()) {
+			System.out.println("Se ha eliminado el archivo "+oldName+".");
+		} else {
+			System.out.println("No se ha podido eliminar el archivo "+oldName+".");
+		}
+		
+		
 		if(output!=null) {
 			this.dataBaseName=output.getName();
 			return output;
@@ -85,4 +100,45 @@ public class ManejaDB {
 		this.dataBaseName=file.getName();
 		return file;
 	}
+
+	/**
+	 * This method will create all the tables inside the data base.
+	 * If you want to see the structure of the data base, check the schema.
+	 */
+	private void createDataBaseSchema() {
+		File sqlSchema = new File(new File("").getAbsolutePath()+ "/src/main/java/dataBase/DataBaseSchema.sql");
+		String buffer = "";
+		try {
+			Scanner sc = new Scanner(sqlSchema);
+			
+			while(sc.hasNextLine()) {
+				String line = sc.nextLine();
+				System.out.println(line);
+				if(line.length()<1||line.charAt(0)=='-'&&line.charAt(1)=='-') {
+					//Here we ignore empty lines or comments
+				} else {
+					buffer+=line;
+					if(line.charAt(line.length()-1)==';') {
+						sent.executeUpdate(buffer);
+						buffer="";
+					}
+					
+				}
+			}
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			System.err.println("No se ha podido encontrar el esquema de la base de datos.");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println("Ha surgido un error durante la creación de la estructura de la base de datos.");
+			System.out.println(buffer);
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
 }
