@@ -41,6 +41,7 @@ public class Main {
 			mW.setScreen(buffer);
 		}
 		
+		mDB.showSchema("");
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class CSVreader {
 	 */
 	public static int munCode(String mun) throws Exception {
 		
-		String s = new File("").getAbsolutePath() +"/src/main/java/resources/mun_codes.csv";
+		String s = new File("").getAbsolutePath() +"/src/main/java/dataBase/mun_codes.csv";
 		s = OsPaths.cleanPath(s);
 		Path inputPath = Paths.get(s);
 		List<String> inputData = Files.readAllLines(inputPath);

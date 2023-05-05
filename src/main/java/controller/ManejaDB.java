@@ -6,6 +6,8 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,17 +17,26 @@ import java.util.Scanner;
 
 import main.Main;
 
+/**
+ * This class handles all interaction with the data base.
+ * @author Kasimxo
+ *
+ */
 public class ManejaDB {
 	
 	private String dataBaseName;
 	private Connection c;
 	private Statement sent;
+	private boolean newDataBase;
 	
 	public ManejaDB() throws IOException, SQLException {
+		this.newDataBase=false;
 		checkActualDataBase();
 		this.c = DriverManager.getConnection("jdbc:sqlite:D:\\sqlite\\" + dataBaseName);
 		this.sent = c.createStatement();
-		createDataBaseSchema();
+		if(newDataBase) {
+			createDataBaseSchema();
+		}
 	}
 	
 	
@@ -69,8 +80,6 @@ public class ManejaDB {
 			}
 		}
 		
-		
-		
 		if(output!=null) {
 			this.dataBaseName=output.getName();
 			return output;
@@ -78,6 +87,7 @@ public class ManejaDB {
 		
 		System.err.println("No se ha encontrado la base de datos.");
 		Main.buffer="Hoy no has realizado ninguna consulta.";
+		newDataBase=true;
 		return createDataBase(dir);
 	}
 	
@@ -110,32 +120,120 @@ public class ManejaDB {
 			
 			while(sc.hasNextLine()) {
 				String line = sc.nextLine();
-				System.out.println(line);
 				if(line.length()<1||line.charAt(0)=='-'&&line.charAt(1)=='-') {
 					//Here we ignore empty lines or comments
 				} else {
 					buffer+=line;
 					if(line.charAt(line.length()-1)==';') {
-						sent.executeUpdate(buffer);
+						sent.execute(buffer);
 						buffer="";
 					}
-					
 				}
 			}
-			
-			
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha podido encontrar el esquema de la base de datos.");
 			e.printStackTrace();
 		} catch (SQLException e) {
 			System.out.println("Ha surgido un error durante la creación de la estructura de la base de datos.");
-			System.out.println(buffer);
+			System.out.println("La última sentencia ha sido:\n"+buffer);
 			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	/**
+	 * This function will check the data base for tables.
+	 * @return
+	 * 	<ul><li>A list composed of table names</li></ul>
+	 */
+	public List<String> showAllTables() {
+		List<String> tablas = new ArrayList<String>();
+		
+		try {
+			System.out.println(c.getClientInfo(dataBaseName));
+			Statement sentencia = c.createStatement();
+			String sql = "SELECT * FROM sqlite_master where type = \"table\";";
+			ResultSet result = sentencia.executeQuery(sql);
+			ResultSetMetaData rsmd = result.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+			while (result.next()) {
+				tablas.add(result.getString(2));
+				//System.out.println(result.getString(2));
+			}
+			return tablas;
+		} catch (SQLException SqlE) {
+			System.out.println("No hay tablas para mostrar");
+			tablas.add("No hay tablas para mostar");
+			return tablas;
 		}
 	}
 	
+	/**
+	 * This function will show the schema of all the tables inside the data base.
+	 * It's intended for debugging.
+	 */
+	public void showSchema() {
+		List<String> tablas = showAllTables();
+		
+		try {
+			for (String nombreTabla : tablas) {
+				System.out.println(nombreTabla);
+				
+				Statement sentencia = c.createStatement();
+				String sql = "PRAGMA table_info("+nombreTabla+");";
+				
+				ResultSet result = sentencia.executeQuery(sql);
+				ResultSetMetaData rsmd = result.getMetaData();
+				int columnsNumber = rsmd.getColumnCount();
+				System.out.println("NumColumna\tNombreTabla\tTipoDato\tNotNull");
+				while (result.next()) {
+					String labels = "   ";
+					
+					for(int i = 1; i<columnsNumber; i++) {
+						labels += result.getString(i)+"      \t";
+					}
+					
+					System.out.println(labels);
+				}
+				
+				
+			}
+			
+		} catch (SQLException SqlE) {
+			System.out.println("Error durante el esquema");
+		}
+	}
 	
-	
-	
+	/**
+	 * This function will show the schema of a specific table.
+	 * It's intended for debugging.
+	 */
+	public void showSchema(String tableName) {
+		
+		try {
+			System.out.println(tableName);
+			
+			Statement sentencia = c.createStatement();
+			String sql = "PRAGMA table_info("+tableName+");";
+			
+			ResultSet result = sentencia.executeQuery(sql);
+			ResultSetMetaData rsmd = result.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+			System.out.println("NumColumna\tNombreTabla\tTipoDato\tNotNull");
+			while (result.next()) {
+				String labels = "   ";
+				
+				for(int i = 1; i<columnsNumber; i++) {
+					labels += result.getString(i)+"      \t";
+				}
+				
+				System.out.println(labels);
+			}
+			
+		} catch (SQLException SqlE) {
+			System.out.println("Error tratando de mostrar el esquema de la tabla \"" + tableName+"\".\nNo existe esa tabla o no se ha encontrado.");
+		}
+	}
 }
