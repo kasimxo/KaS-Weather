@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Scanner;
 
 import main.Main;
@@ -49,29 +51,24 @@ public class ManejaDB {
 		File[] arrayDirs = dir.listFiles(filter);
 		File output=null;
 		//We delete old data base files.
-		File delete=null;
+		List<File> deletes = new ArrayList<File>();
 		for (File file : arrayDirs) {
-			if(delete!=null) {
-				String oldName = delete.getName();
-				if(delete.delete()) {
-					System.out.println("Se ha eliminado el archivo "+oldName+".");
-				} else {
-					System.out.println("No se ha podido eliminar el archivo "+oldName+".");
-				}
-			}
-			
 			if(file.getName().compareTo(fileName)==0) {
 				System.out.println("Se ha cargado la base de datos con éxito.");
 				output=file;
+			} else {
+				deletes.add(file);
 			}
-			delete=file;
 		}
-		String oldName = delete.getName();
-		if(delete.delete()) {
-			System.out.println("Se ha eliminado el archivo "+oldName+".");
-		} else {
-			System.out.println("No se ha podido eliminar el archivo "+oldName+".");
+		for (File file : deletes) {
+			String oldName = file.getName();
+			if(file.delete()) {
+				System.out.println("Se ha eliminado el archivo "+oldName+".");
+			} else {
+				System.out.println("No se ha podido eliminar el archivo "+oldName+".");
+			}
 		}
+		
 		
 		
 		if(output!=null) {
