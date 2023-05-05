@@ -3,6 +3,7 @@ package main;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import view.Main_Window;
 import utilities.CSVreader;
+import utilities.OsPaths;
 
 public class Main {
 	
@@ -32,6 +34,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
+		changeSystemOut();
+		
+		
 		cargarDataBase();
 		
 		mW = new Main_Window();
@@ -42,6 +47,23 @@ public class Main {
 		}
 		
 		mDB.showSchema("");
+		
+		System.out.println("nepe");
+	}
+
+	public static void changeSystemOut() {
+		String path = new File("").getAbsolutePath()+"/src/main/java/log.txt";
+		path = OsPaths.cleanPath(path);
+		File test = new File(path);
+		PrintStream stream;
+		try {
+			stream = new PrintStream(test);
+			System.setOut(stream);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
