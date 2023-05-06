@@ -1,1 +1,3 @@
 /target/
+#Added .txt filter to ignore logs and private API keys
+*.txt
