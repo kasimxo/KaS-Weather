@@ -65,7 +65,8 @@ public class ManejaDB {
 		List<File> deletes = new ArrayList<File>();
 		for (File file : arrayDirs) {
 			if(file.getName().compareTo(fileName)==0) {
-				System.out.println("Se ha cargado la base de datos con éxito.");
+				Main.OL.outputText("Se ha cargado la base de datos con exito.");
+				System.out.println("Se ha cargado la base de datos con ï¿½xito.");
 				output=file;
 			} else {
 				deletes.add(file);
@@ -74,8 +75,10 @@ public class ManejaDB {
 		for (File file : deletes) {
 			String oldName = file.getName();
 			if(file.delete()) {
+				Main.OL.outputText("Se ha eliminado el archivo "+oldName+".");
 				System.out.println("Se ha eliminado el archivo "+oldName+".");
 			} else {
+				Main.OL.outputText("No se ha podido eliminar el archivo "+oldName+".");
 				System.out.println("No se ha podido eliminar el archivo "+oldName+".");
 			}
 		}
@@ -84,7 +87,7 @@ public class ManejaDB {
 			this.dataBaseName=output.getName();
 			return output;
 		}
-		
+		Main.OL.outputText("No se ha encontrado la base de datos.");
 		System.err.println("No se ha encontrado la base de datos.");
 		Main.buffer="Hoy no has realizado ninguna consulta.";
 		newDataBase=true;
@@ -103,6 +106,7 @@ public class ManejaDB {
 		String fileName = splited[0]+splited[2]+splited[5]+".db";
 		File file = new File(dir+"/"+fileName);
 		file.createNewFile();
+		Main.OL.outputText("Se ha creado la base de datos.");
 		System.out.println("Se ha creado la base de datos.");
 		this.dataBaseName=file.getName();
 		return file;
@@ -132,11 +136,14 @@ public class ManejaDB {
 			}
 			
 		} catch (FileNotFoundException e) {
+			Main.OL.outputText("No se ha podido encontrar el esquema de la base de datos.");
 			System.err.println("No se ha podido encontrar el esquema de la base de datos.");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("Ha surgido un error durante la creación de la estructura de la base de datos.");
-			System.out.println("La última sentencia ha sido:\n"+buffer);
+			Main.OL.outputText("Ha surgido un error durante la creaciï¿½n de la estructura de la base de datos.");
+			Main.OL.outputText("La ï¿½ltima sentencia ha sido:\n"+buffer);
+			System.out.println("Ha surgido un error durante la creaciï¿½n de la estructura de la base de datos.");
+			System.out.println("La ï¿½ltima sentencia ha sido:\n"+buffer);
 			e.printStackTrace();
 		}
 		
@@ -164,7 +171,6 @@ public class ManejaDB {
 			}
 			return tablas;
 		} catch (SQLException SqlE) {
-			System.out.println("No hay tablas para mostrar");
 			tablas.add("No hay tablas para mostar");
 			return tablas;
 		}
@@ -202,7 +208,8 @@ public class ManejaDB {
 			}
 			
 		} catch (SQLException SqlE) {
-			System.out.println("Error durante el esquema");
+			Main.OL.outputText("Error durante el esquema.");
+			System.out.println("Error durante el esquema.");
 		}
 	}
 	
@@ -233,6 +240,7 @@ public class ManejaDB {
 			}
 			
 		} catch (SQLException SqlE) {
+			Main.OL.outputText("Error tratando de mostrar el esquema de la tabla \"" + tableName+"\".\nNo existe esa tabla o no se ha encontrado.");
 			System.out.println("Error tratando de mostrar el esquema de la tabla \"" + tableName+"\".\nNo existe esa tabla o no se ha encontrado.");
 		}
 	}

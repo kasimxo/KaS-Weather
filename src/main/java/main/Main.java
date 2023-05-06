@@ -20,12 +20,14 @@ import kong.unirest.Unirest;
 import view.Main_Window;
 import utilities.CSVreader;
 import utilities.OsPaths;
+import utilities.OutputLog;
 
 public class Main {
 	
 	public static Main_Window mW;
+	public static OutputLog OL;
 	/**
-	 * La Base de Datos almacena los datos de todas las consultas que realizamos en un determinado día 
+	 * La Base de Datos almacena los datos de todas las consultas que realizamos en un determinado dï¿½a 
 	 * para evitar realizar consultas duplicadas.
 	 */
 	public static File dataBase;
@@ -33,9 +35,7 @@ public class Main {
 	public static String buffer;
 	
 	public static void main(String[] args) {
-		
-		changeSystemOut();
-		
+		OL = new OutputLog();
 		
 		cargarDataBase();
 		
@@ -46,23 +46,7 @@ public class Main {
 			mW.setScreen(buffer);
 		}
 		
-		mDB.showSchema("");
-		
-		System.out.println("nepe");
-	}
-
-	public static void changeSystemOut() {
-		String path = new File("").getAbsolutePath()+"/src/main/java/log.txt";
-		path = OsPaths.cleanPath(path);
-		File test = new File(path);
-		PrintStream stream;
-		try {
-			stream = new PrintStream(test);
-			System.setOut(stream);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		mDB.showSchema("CODES");
 		
 	}
 
@@ -73,10 +57,13 @@ public class Main {
 	private static void cargarDataBase() {
 		try {
 			mDB = new ManejaDB();
+
 		} catch (IOException e) {
+			OL.outputText("No se ha podido crear la base de datos.");
 			System.err.println("No se ha podido crear la base de datos.");
 			e.printStackTrace();
 		} catch (SQLException e) {
+			OL.outputText("No se ha podido conectar con la base de datos.");
 			System.err.println("No se ha podido conectar con la base de datos.");
 			e.printStackTrace();
 		}		

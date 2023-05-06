@@ -1,6 +1,2 @@
-Buscamos archivo: Fri052023.db
-Se ha cargado la base de datos con éxito.
-
-Error tratando de mostrar el esquema de la tabla "".
-No existe esa tabla o no se ha encontrado.
-nepe
+Sat May 06 14:55:31 CEST 2023:
+Se ha cargado la base de datos con exito.
