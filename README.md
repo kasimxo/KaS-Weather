@@ -19,6 +19,6 @@
  
  ![](https://img.shields.io/badge/sqlite--jdbc-3.8.7-brightgreen)
  
-We use SQLite to save every request done and save the server from unnecesary trafic. Everytime the program start, it deletes old request to save memory.
+We use SQLite to save every request done and save the server from unnecesary trafic. Everytime the program starts, it checks for old request files (files which name is not today's date) and deletes it to save memory.
  
 
