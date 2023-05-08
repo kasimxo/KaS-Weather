@@ -38,7 +38,20 @@ public class ManejaDB {
 			createDataBaseSchema();
 		}
 	}
-	
+	/**
+	 * This method will insert the values given in a String into the specified table.
+	 * If the String does not match the correct structure or violates a restriction, it will fail.
+	 * @param tableName
+	 * @throws SQLException 
+	 */
+	public void insertValues(String tableName, String values) throws SQLException {
+		Statement sentencia = c.createStatement();
+		String sql = "Insert into " +tableName+" values (" +values+");";
+		if(sentencia.execute(sql)) {
+			System.out.println("Se han introducido los datos con éxito.");
+			Main.OL.outputText("Se han introducido los datos con éxito.");
+		}
+	}
 	
 	/**
 	 * This method checks if a database exists with today (sysdate).
@@ -134,7 +147,7 @@ public class ManejaDB {
 					}
 				}
 			}
-			
+			sc.close();
 		} catch (FileNotFoundException e) {
 			Main.OL.outputText("No se ha podido encontrar el esquema de la base de datos.");
 			System.err.println("No se ha podido encontrar el esquema de la base de datos.");
@@ -146,7 +159,6 @@ public class ManejaDB {
 			System.out.println("La �ltima sentencia ha sido:\n"+buffer);
 			e.printStackTrace();
 		}
-		
 		
 	}
 	
@@ -163,18 +175,55 @@ public class ManejaDB {
 			Statement sentencia = c.createStatement();
 			String sql = "SELECT * FROM sqlite_master where type = \"table\";";
 			ResultSet result = sentencia.executeQuery(sql);
-			ResultSetMetaData rsmd = result.getMetaData();
-			int columnsNumber = rsmd.getColumnCount();
 			while (result.next()) {
 				tablas.add(result.getString(2));
-				//System.out.println(result.getString(2));
+				System.out.println(result.getString(2));
 			}
-			return tablas;
 		} catch (SQLException SqlE) {
 			tablas.add("No hay tablas para mostar");
-			return tablas;
 		}
+		return tablas;
 	}
+	
+	/**
+	 * This method will return all the table content including column headers.
+	 * If a cell is empty, it will show <b>'null'</b>.
+	 * @param
+	 * 	tableName -> The name of the table to show.
+	 * @return
+	 * 	List<String> -> A list where every String is a full row separated by <b>';'</b>
+	 */
+	public List<String> showTableContent(String tableName) {
+		List<String> table = new ArrayList<String>();
+		try {
+			System.out.println(tableName);
+			
+			Statement sentencia = c.createStatement();
+			String sql = "Select * from "+tableName+";";
+			ResultSet result = sentencia.executeQuery(sql);
+			ResultSetMetaData rsmd = result.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+			String labels = "";
+			for(int i = 1; i<=columnsNumber; i++)  {
+				labels+=rsmd.getColumnLabel(i)+";";
+			}
+			table.add(labels);
+			System.out.println(table.get(0));
+			
+			//A partir de aquí dará error si la tabla está vacía.
+			while(result.next()) {
+				for(int i = 1; i<=columnsNumber; i++)  {
+					System.out.println(result.getString(columnsNumber));
+				}
+			}
+			
+		} catch (SQLException SqlE) {
+			Main.OL.outputText("La tabla "+tableName+" esta vacía.");
+			System.out.println("La tabla "+tableName+" esta vacía.");
+		}
+		return table;
+	}
+	
 	
 	/**
 	 * This function will show the schema of all the tables inside the data base.

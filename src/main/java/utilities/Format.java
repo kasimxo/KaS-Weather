@@ -20,9 +20,6 @@ public class Format {
 		path = OsPaths.cleanPath(path);
 		File test = new File(path);
 		PrintStream stream = new PrintStream(test);
-		System.setOut(stream);
-		
-		
 		
 		List<String> output = new ArrayList<String>();
 
@@ -30,12 +27,8 @@ public class Format {
 			output.add(string);
 		}
 		
-//		for (String string : output) {
-//			System.out.println(string);
-//		}
-		
 		for (int i = 0; i < rawData.length(); i++) {
-			System.out.print(rawData.charAt(i));
+			stream.append(rawData.charAt(i));
 		}
 		
 		stream.close();

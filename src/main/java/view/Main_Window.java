@@ -25,6 +25,7 @@ import java.awt.Color;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
+import javax.swing.JTable;
 
 public class Main_Window extends JFrame {
 
@@ -33,6 +34,7 @@ public class Main_Window extends JFrame {
 	private JScrollPane screen;
 	private JLabel lbl_output;
 	private JLabel lbl_header;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -57,7 +59,7 @@ public class Main_Window extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
 		setTitle("KaS-Weather");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 470, 300);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -84,15 +86,15 @@ public class Main_Window extends JFrame {
 						try {
 							List<String> formato = Format.rawDataToList(s);
 							for (String string : formato) {
-								System.out.println(string + "nepe\n");
+								System.out.print(string);
 							}
 						} catch (FileNotFoundException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}
 					
 					txt_input.setText("");
+					JsonHandler.toDataBase();
 					lbl_output.setText(JsonHandler.getTemperatura());
 					lbl_header.setText(JsonHandler.municipio);
 				} else {
@@ -100,11 +102,11 @@ public class Main_Window extends JFrame {
 				}
 			}
 		});
-		btn_send.setBounds(12, 226, 117, 25);
+		btn_send.setBounds(15, 226, 100, 25);
 		contentPane.add(btn_send);
 		
 		txt_input = new JTextField();
-		txt_input.setBounds(72, 146, 233, 30);
+		txt_input.setBounds(15, 170, 235, 30);
 		contentPane.add(txt_input);
 		txt_input.setColumns(10);
 		
@@ -114,11 +116,11 @@ public class Main_Window extends JFrame {
 				txt_input.setText("");
 			}
 		});
-		btn_cancel.setBounds(307, 226, 117, 25);
+		btn_cancel.setBounds(150, 226, 100, 25);
 		contentPane.add(btn_cancel);
 		
 		screen = new JScrollPane();
-		screen.setBounds(15, 10, 420, 125);
+		screen.setBounds(15, 10, 700, 125);
 		contentPane.add(screen);
 		
 		lbl_output = new JLabel("");
@@ -127,11 +129,17 @@ public class Main_Window extends JFrame {
 		screen.setViewportView(lbl_output);
 		lbl_output.setBackground(Color.WHITE);
 		
+		
+		
+		
 		lbl_header = new JLabel("");
 		screen.setColumnHeaderView(lbl_header);
 		
-		JLabel lbl_municipio = new JLabel("Municipio:");
-		lbl_municipio.setBounds(12, 149, 117, 25);
+		table = new JTable();
+		screen.setRowHeaderView(table);
+		
+		JLabel lbl_municipio = new JLabel("Seleccionar municipio:");
+		lbl_municipio.setBounds(15, 149, 180, 25);
 		contentPane.add(lbl_municipio);
 	}
 	
@@ -142,6 +150,4 @@ public class Main_Window extends JFrame {
 	public void setScreen(String s) {
 		lbl_output.setText(s);
 	}
-	
-	
 }

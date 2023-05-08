@@ -45,8 +45,10 @@ public class Main {
 		if(buffer!=null) {
 			mW.setScreen(buffer);
 		}
-		
+
 		mDB.showSchema("CODES");
+		List<String> test = mDB.showTableContent("TEMPERATURE");
+		
 		
 	}
 
