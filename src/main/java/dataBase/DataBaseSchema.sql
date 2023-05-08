@@ -23,14 +23,6 @@ CREATE TABLE IF NOT EXISTS 'PRECIPITATION' (
   FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
 ) ;
 
-CREATE TABLE IF NOT EXISTS 'PRECIPITATION' (
-  'Cod_mun' varchar(5) NOT NULL,
-  'Fecha' varchar(30) NOT NULL,
-  'Valor' varchar(30),
-  PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
-) ;
-
 CREATE TABLE IF NOT EXISTS 'SNOW' (
   'Cod_mun' varchar(5) NOT NULL,
   'Fecha' varchar(30) NOT NULL,

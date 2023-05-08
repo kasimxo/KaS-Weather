@@ -62,6 +62,7 @@ public class JsonHandler {
 				String codmun = "" + CSVreader.munCode(municipio);
 				output2+=codmun+","+f + "," + max + "," + min + "," +maxRel+","+minRel;
 				Main.mDB.insertValues("TEMPERATURE", output2);
+				System.out.println("Se ha insertado " + output2);
 				output2="";
 			}
         } catch (Exception e) {

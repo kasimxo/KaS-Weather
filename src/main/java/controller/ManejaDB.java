@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.Main;
+import utilities.OsPaths;
 
 /**
  * This class handles all interaction with the data base.
@@ -32,7 +33,9 @@ public class ManejaDB {
 	public ManejaDB() throws IOException, SQLException {
 		this.newDataBase=false;
 		checkActualDataBase();
-		this.c = DriverManager.getConnection("jdbc:sqlite:D:\\sqlite\\" + dataBaseName);
+		String pathDataBase = new File("").getAbsolutePath()+"/src/main/java/dataBase/"+dataBaseName;
+		pathDataBase = OsPaths.cleanPath(pathDataBase);
+		this.c = DriverManager.getConnection("jdbc:sqlite:" + pathDataBase);
 		this.sent = c.createStatement();
 		if(newDataBase) {
 			createDataBaseSchema();
@@ -213,8 +216,10 @@ public class ManejaDB {
 			//A partir de aquí dará error si la tabla está vacía.
 			while(result.next()) {
 				for(int i = 1; i<=columnsNumber; i++)  {
-					System.out.println(result.getString(columnsNumber));
+					System.out.print(result.getObject(i)+" ");
+					//System.out.println(result.getInt(i) +"sadasdfad "+result.getString(columnsNumber));
 				}
+				System.out.println();
 			}
 			
 		} catch (SQLException SqlE) {
