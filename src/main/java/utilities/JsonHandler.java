@@ -60,24 +60,34 @@ public class JsonHandler {
 			String prov = "" + CSVreader.getProv(municipio);
 			try {
 				Main.mDB.insertValues("CODES", codmun+",\""+prov+"\",\""+municipio+"\"");
-			
+				System.out.println("Se ha insertado en la tabla codes");
 				//Here we are going through all days
 				for (Object object : jA) {
 					//Here we are inside a specific day
 					JSONObject j3 = new JSONObject(object.toString());
 					String f = j3.getString("fecha").toString();
+					f = f.substring(0,10);
+					
 					JSONObject Temp = new JSONObject(j3.get("temperatura").toString());
-					JSONObject sensTerm = new JSONObject(j3.get("sensTermica").toString());
 					String min = Temp.getString("minima"); 
 					String max = Temp.getString("maxima");
-					f = f.substring(0,10);
+					
+					JSONObject sensTerm = new JSONObject(j3.get("sensTermica").toString());
 					String maxRel = sensTerm.getString("maxima");
 					String minRel = sensTerm.getString("minima");
+					
+					JSONArray wind = new JSONArray(j3.get("viento").toString());
+					JSONObject windD = (JSONObject) wind.get(0);
+					String direccion = windD.getString("direccion");
+					String vel = windD.getString("velocidad");
+					String rachamax = "";
+					Main.mDB.insertValues("WIND", "\""+codmun+"\",\""+f+"\",\""+direccion+"\",\""+vel+"\",\""+rachamax+"\"");
+					System.out.println("Se ha insertado en la tabla viento");
 					System.out.println(f);
 					output2+=codmun+",\""+f + "\"," + max + "," + min + "," +maxRel+","+minRel;
 					Main.mDB.insertValues("TEMPERATURE", output2);
 					System.out.println("Se ha insertado en la tabla temperatura");
-					System.out.println("Se ha insertado en la tabla codes");
+					
 					System.out.println("Se ha insertado " + output2);
 					output2="";
 				}

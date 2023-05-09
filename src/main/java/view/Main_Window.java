@@ -32,9 +32,9 @@ public class Main_Window extends JFrame {
 	private JPanel contentPane;
 	private JTextField txt_input;
 	private JScrollPane screen;
+	private JTable table;
 	private JLabel lbl_output;
 	private JLabel lbl_header;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -120,27 +120,25 @@ public class Main_Window extends JFrame {
 		contentPane.add(btn_cancel);
 		
 		screen = new JScrollPane();
-		screen.setBounds(15, 10, 700, 125);
+		screen.setBounds(15, 10, 699, 125);
 		contentPane.add(screen);
 		
 		lbl_output = new JLabel("");
-		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_output.setOpaque(true);
 		screen.setViewportView(lbl_output);
+		lbl_output.setOpaque(true);
+		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_output.setBackground(Color.WHITE);
-		
-		
-		
 		
 		lbl_header = new JLabel("");
 		screen.setColumnHeaderView(lbl_header);
 		
-		table = new JTable();
-		screen.setRowHeaderView(table);
-		
 		JLabel lbl_municipio = new JLabel("Seleccionar municipio:");
 		lbl_municipio.setBounds(15, 149, 180, 25);
 		contentPane.add(lbl_municipio);
+		
+		table = new JTable();
+		table.setBounds(0, 388, 450, 50);
+		contentPane.add(table);
 	}
 	
 	/**
