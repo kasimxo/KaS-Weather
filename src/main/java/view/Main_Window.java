@@ -7,10 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.Request;
+import main.Main;
 import utilities.CSVreader;
 import utilities.Format;
 import utilities.JsonHandler;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -26,6 +28,8 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
+import javax.swing.JList;
+import javax.swing.JMenuItem;
 
 public class Main_Window extends JFrame {
 
@@ -35,6 +39,7 @@ public class Main_Window extends JFrame {
 	private JTable table;
 	private JLabel lbl_output;
 	private JLabel lbl_header;
+	private JList<String> list;
 
 	/**
 	 * Launch the application.
@@ -136,6 +141,13 @@ public class Main_Window extends JFrame {
 		
 		lbl_header = new JLabel("");
 		screen.setColumnHeaderView(lbl_header);
+		DefaultListModel model = new DefaultListModel();
+		list = new JList(model);
+		List<String> tablas = Main.mDB.showAllViews();
+		for (String nombreVista : tablas) {
+			model.addElement(nombreVista);
+		}
+		screen.setRowHeaderView(list);
 		
 		JLabel lbl_municipio = new JLabel("Seleccionar municipio:");
 		lbl_municipio.setBounds(15, 149, 180, 25);
@@ -144,6 +156,9 @@ public class Main_Window extends JFrame {
 		table = new JTable();
 		table.setBounds(0, 388, 450, 50);
 		contentPane.add(table);
+		
+		
+		
 	}
 	
 	/**

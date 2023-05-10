@@ -72,7 +72,18 @@ CREATE TABLE IF NOT EXISTS 'HUMIDITY' (
 ) ;
 
 --Create views
+
+CREATE VIEW 'HUMEDAD' AS 
+SELECT C.Provincia as 'PROVINCIA', C.Nombre as 'MUNICIPIO', H.Fecha, H.Max as 'HUMEDAD MAXIMA', H.Min as 'HUMEDAD MINIMA' 
+FROM HUMIDITY H 
+JOIN CODES C ON C.Cod_mun=H.Cod_mun;
+
 CREATE VIEW 'TEMPERATURA' AS 
 SELECT C.Provincia as 'PROVINCIA', C.Nombre as 'MUNICIPIO', T.Fecha, T.T_max as 'Ta MAXIMA', T.T_min as 'Ta MINIMA', T.T_max_rel as 'SENSACION TERMICA MAXIMA', T.T_min_rel as 'SENSACION TERMICA MINIMA'
 FROM TEMPERATURE T 
 JOIN CODES C on C.Cod_mun=T.Cod_mun;
+
+CREATE VIEW 'VIENTO' AS 
+SELECT C.Provincia as 'PROVINCIA', C.Nombre as 'MUNICIPIO', W.Fecha, W.Direccion as 'DIRECCION', W.Velocidad as 'VELOCIDAD', W.RachaMax as 'RACHA MAXIMA' 
+FROM WIND W 
+JOIN CODES C on C.Cod_mun=W.Cod_mun;

@@ -189,6 +189,29 @@ public class ManejaDB {
 	}
 	
 	/**
+	 * This function will check the data base for views.
+	 * @return
+	 * 	<ul><li>A list composed of views names</li></ul>
+	 */
+	public List<String> showAllViews() {
+		List<String> tablas = new ArrayList<String>();
+		
+		try {
+			System.out.println(c.getClientInfo(dataBaseName));
+			Statement sentencia = c.createStatement();
+			String sql = "SELECT * FROM sqlite_master where type = \"view\";";
+			ResultSet result = sentencia.executeQuery(sql);
+			while (result.next()) {
+				tablas.add(result.getString(2));
+				System.out.println(result.getString(2));
+			}
+		} catch (SQLException SqlE) {
+			tablas.add("No hay tablas para mostar");
+		}
+		return tablas;
+	}
+	
+	/**
 	 * This method will return all the table content including column headers.
 	 * If a cell is empty, it will show <b>'null'</b>.
 	 * @param
