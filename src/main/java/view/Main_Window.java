@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import controller.Request;
 import main.Main;
@@ -18,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollBar;
@@ -30,6 +35,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Main_Window extends JFrame {
 
@@ -40,6 +47,8 @@ public class Main_Window extends JFrame {
 	private JLabel lbl_output;
 	private JLabel lbl_header;
 	private JList<String> list;
+	private List<String> tablas;
+	private DefaultTableModel tableModel = new DefaultTableModel();
 
 	/**
 	 * Launch the application.
@@ -105,18 +114,17 @@ public class Main_Window extends JFrame {
 					
 					txt_input.setText("");
 					JsonHandler.toDataBase();
-					lbl_output.setText(JsonHandler.getTemperatura());
 					lbl_header.setText(JsonHandler.municipio);
 				} else {
 					lbl_output.setText("Introduce el nombre de un municipio.");
 				}
 			}
 		});
-		btn_send.setBounds(15, 226, 100, 25);
+		btn_send.setBounds(10, 294, 100, 25);
 		contentPane.add(btn_send);
 		
 		txt_input = new JTextField();
-		txt_input.setBounds(15, 170, 235, 30);
+		txt_input.setBounds(10, 238, 235, 30);
 		contentPane.add(txt_input);
 		txt_input.setColumns(10);
 		
@@ -126,41 +134,70 @@ public class Main_Window extends JFrame {
 				txt_input.setText("");
 			}
 		});
-		btn_cancel.setBounds(150, 226, 100, 25);
+		btn_cancel.setBounds(145, 294, 100, 25);
 		contentPane.add(btn_cancel);
 		
 		screen = new JScrollPane();
-		screen.setBounds(15, 10, 699, 125);
+		screen.setBounds(10, 50, 699, 125);
 		contentPane.add(screen);
-		
-		lbl_output = new JLabel("");
-		screen.setViewportView(lbl_output);
-		lbl_output.setOpaque(true);
-		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_output.setBackground(Color.WHITE);
 		
 		lbl_header = new JLabel("");
 		screen.setColumnHeaderView(lbl_header);
 		DefaultListModel model = new DefaultListModel();
 		list = new JList(model);
-		List<String> tablas = Main.mDB.showAllViews();
+		tablas = Main.mDB.showAllViews();
 		for (String nombreVista : tablas) {
 			model.addElement(nombreVista);
 		}
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				String selectedView = tablas.get(list.getSelectedIndex());
+				mostrarView(selectedView);
+				System.out.println("El index seleccionado es: " + list.getSelectedIndex() + " que corresponde con el ítem: " + tablas.get(list.getSelectedIndex()));
+			}
+		});
 		screen.setRowHeaderView(list);
 		
+		table = new JTable(tableModel);
+		screen.setViewportView(table);
+		
 		JLabel lbl_municipio = new JLabel("Seleccionar municipio:");
-		lbl_municipio.setBounds(15, 149, 180, 25);
+		lbl_municipio.setBounds(10, 213, 180, 25);
 		contentPane.add(lbl_municipio);
 		
-		table = new JTable();
-		table.setBounds(0, 388, 450, 50);
-		contentPane.add(table);
+		lbl_output = new JLabel("");
+		lbl_output.setBounds(10, 177, 699, 25);
+		contentPane.add(lbl_output);
+		lbl_output.setOpaque(true);
+		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_output.setBackground(Color.WHITE);
 		
 		
 		
 	}
 	
+	private void mostrarView(String selectedView) {
+		List<String> viewContent = Main.mDB.showViewContent(selectedView);
+		String[] headers = viewContent.get(0).split(" ");
+		tableModel.setRowCount(viewContent.size()-1);
+		tableModel.setColumnCount(viewContent.get(0).split(" ").length);
+		table = new JTable(tableModel);
+		
+		for(int col = 0; col<tableModel.getColumnCount(); col++) {
+			tableModel.setColumnIdentifiers(headers);
+		}
+		
+		//header.getColumnModel().getColumn(ABORT);
+		
+		for (int row = 1; row < tableModel.getRowCount(); row++) {
+			String[] linea = viewContent.get(row).split(" ");
+			for(int i = 0; i<linea.length; i++) {
+				tableModel.setValueAt(linea[i], row-1, i);
+			}
+		}
+	}
+
 	/**
 	 * This method displays a string in the main window screen.
 	 * @param s

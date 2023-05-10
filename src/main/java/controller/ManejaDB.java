@@ -212,6 +212,18 @@ public class ManejaDB {
 	}
 	
 	/**
+	 * This method will return all the view content including column headers.
+	 * If a cell is empty, it will show <b>'null'</b>.
+	 * @param
+	 * 	viewName -> The name of the table to show.
+	 * @return
+	 * 	List<String> -> A list where every String is a full row separated by <b>';'</b>
+	 */
+	public List<String> showViewContent(String viewName) {
+		return showTableContent(viewName);
+	}
+	
+	/**
 	 * This method will return all the table content including column headers.
 	 * If a cell is empty, it will show <b>'null'</b>.
 	 * @param
@@ -231,17 +243,19 @@ public class ManejaDB {
 			int columnsNumber = rsmd.getColumnCount();
 			String labels = "";
 			for(int i = 1; i<=columnsNumber; i++)  {
-				labels+=rsmd.getColumnLabel(i)+";";
+				labels+=rsmd.getColumnLabel(i)+" ";
 			}
 			table.add(labels);
 			System.out.println(table.get(0));
 			
 			//A partir de aquí dará error si la tabla está vacía.
 			while(result.next()) {
+				String linea = "";
 				for(int i = 1; i<=columnsNumber; i++)  {
+					linea += result.getObject(i)+" ";
 					System.out.print(result.getObject(i)+" ");
-					//System.out.println(result.getInt(i) +"sadasdfad "+result.getString(columnsNumber));
 				}
+				table.add(linea);
 				System.out.println();
 			}
 			
