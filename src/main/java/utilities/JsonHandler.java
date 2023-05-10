@@ -2,6 +2,7 @@ package utilities;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.io.File;
 
@@ -12,6 +13,11 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import main.Main;
 
+/**
+ * This class handles the JSON response from the server and puts all the data into the data base
+ * @author Alumno
+ *
+ */
 public class JsonHandler {
 	
 	public static String municipio="";
@@ -50,22 +56,46 @@ public class JsonHandler {
 			JSONObject j2 = (JSONObject) j.get("prediccion");
 			JSONArray jA = (JSONArray) j2.get("dia");
 			String output2 = "";
-			for (Object object : jA) {
-				JSONObject j3 = new JSONObject(object.toString());
-				String f = j3.getString("fecha").toString();
-				JSONObject j4 = new JSONObject(j3.get("temperatura").toString());
-				String min = j4.getString("minima"); 
-				String max = j4.getString("maxima");
-				f = f.substring(0,10);
-				String maxRel = "0";
-				String minRel = "0";
-				String codmun = "" + CSVreader.munCode(municipio);
-				output2+=codmun+","+f + "," + max + "," + min + "," +maxRel+","+minRel;
-				Main.mDB.insertValues("TEMPERATURE", output2);
-				System.out.println("Se ha insertado " + output2);
-				output2="";
+			String codmun = "" + CSVreader.munCode(municipio);
+			String prov = "" + CSVreader.getProv(municipio);
+			try {
+				Main.mDB.insertValues("CODES", codmun+",\""+prov+"\",\""+municipio+"\"");
+				System.out.println("Se ha insertado en la tabla codes");
+				//Here we are going through all days
+				for (Object object : jA) {
+					//Here we are inside a specific day
+					JSONObject j3 = new JSONObject(object.toString());
+					String f = j3.getString("fecha").toString();
+					f = f.substring(0,10);
+					
+					JSONObject Temp = new JSONObject(j3.get("temperatura").toString());
+					String min = Temp.getString("minima"); 
+					String max = Temp.getString("maxima");
+					
+					JSONObject sensTerm = new JSONObject(j3.get("sensTermica").toString());
+					String maxRel = sensTerm.getString("maxima");
+					String minRel = sensTerm.getString("minima");
+					
+					JSONArray wind = new JSONArray(j3.get("viento").toString());
+					JSONObject windD = (JSONObject) wind.get(0);
+					String direccion = windD.getString("direccion");
+					String vel = windD.getString("velocidad");
+					String rachamax = "";
+					Main.mDB.insertValues("WIND", "\""+codmun+"\",\""+f+"\",\""+direccion+"\",\""+vel+"\",\""+rachamax+"\"");
+					System.out.println("Se ha insertado en la tabla viento");
+					System.out.println(f);
+					output2+=codmun+",\""+f + "\"," + max + "," + min + "," +maxRel+","+minRel;
+					Main.mDB.insertValues("TEMPERATURE", output2);
+					System.out.println("Se ha insertado en la tabla temperatura");
+					
+					System.out.println("Se ha insertado " + output2);
+					output2="";
+				}
+			} catch (SQLException e) {
+				System.out.println("Ya se había hecho esa consulta hoy.");
 			}
         } catch (Exception e) {
+        	System.out.println("La cagaste gordo");
             e.printStackTrace();
         } 
 	}
@@ -113,6 +143,16 @@ public class JsonHandler {
             e.printStackTrace();
         } 
 		return null;
+	}
+	
+	
+	/**
+	 * This method will return the value of a JSON Object key
+	 * @param key
+	 * @return
+	 */
+	public static String getValue(JSONObject JObject, String key) {
+		return JObject.getString(key).toString();
 	}
 	
 }

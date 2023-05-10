@@ -12,6 +12,8 @@ import kong.unirest.GetRequest;
 import kong.unirest.Header;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import kong.unirest.json.JSONObject;
+import utilities.JsonHandler;
 
 /**
  * This class handles using AEMET API
@@ -34,12 +36,12 @@ public class Request {
 		  .asString();
 
 		System.out.println(response.getStatus());
-	
+		
 		String s = (String) response.getBody();
-		String[] splitedLines = s.split("\n");
-		String dataLink = splitedLines[3].split(" ")[4];
-		dataLink = dataLink.substring(1, dataLink.length()-2);
-	
+		//Here we clean the response to crate a JSONObject
+		s = s.replace("\n", "");
+		JSONObject JObject = new JSONObject(s);
+		String dataLink = JsonHandler.getValue(JObject, "datos");
 		return dataLink;
 	}
 	
