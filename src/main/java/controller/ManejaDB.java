@@ -51,8 +51,8 @@ public class ManejaDB {
 		Statement sentencia = c.createStatement();
 		String sql = "Insert into " +tableName+" values (" +values+");";
 		if(sentencia.execute(sql)) {
-			System.out.println("Se han introducido los datos con éxito.");
-			Main.OL.outputText("Se han introducido los datos con éxito.");
+			System.out.println("Se han introducido los datos: "+values+" con éxito en la tabla: "+tableName+".");
+			Main.OL.outputText("Se han introducido los datos: "+values+" con éxito en la tabla: "+tableName+".");
 		}
 	}
 	

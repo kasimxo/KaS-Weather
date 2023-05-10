@@ -10,6 +10,7 @@ import java.io.File;
 import org.json.simple.parser.JSONParser;
 import utilities.OsPaths;
 import kong.unirest.json.JSONArray;
+import kong.unirest.json.JSONException;
 import kong.unirest.json.JSONObject;
 import main.Main;
 
@@ -40,9 +41,9 @@ public class JsonHandler {
 	public static void sqlInsertTemperature() {
 		//JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
-         
+        municipio = "";
         try {
-        	String path = OsPaths.cleanPath(new File("").getAbsolutePath() + "/src/main/java/test.json");
+        	String path = OsPaths.cleanPath(new File("").getAbsolutePath() + "/src/main/java/Resultado_Consulta.json");
         	Reader reader = new FileReader(path);
         	Object obj = jsonParser.parse(reader);
         	/**
@@ -86,16 +87,13 @@ public class JsonHandler {
 					System.out.println(f);
 					output2+=codmun+",\""+f + "\"," + max + "," + min + "," +maxRel+","+minRel;
 					Main.mDB.insertValues("TEMPERATURE", output2);
-					System.out.println("Se ha insertado en la tabla temperatura");
-					
-					System.out.println("Se ha insertado " + output2);
 					output2="";
 				}
 			} catch (SQLException e) {
-				System.out.println("Ya se había hecho esa consulta hoy.");
+				System.out.println("Ya se habï¿½a hecho esa consulta hoy.");
 			}
         } catch (Exception e) {
-        	System.out.println("La cagaste gordo");
+        	System.out.println("Se ha producido un error leyendo la respuesta del servidor.");
             e.printStackTrace();
         } 
 	}
@@ -112,7 +110,7 @@ public class JsonHandler {
         JSONParser jsonParser = new JSONParser();
          
         try {
-        	String path = OsPaths.cleanPath(new File("").getAbsolutePath() + "/src/main/java/test.json");
+        	String path = OsPaths.cleanPath(new File("").getAbsolutePath() + "/src/main/java/Resultado_Consulta.json");
         	Reader reader = new FileReader(path);
         	Object obj = jsonParser.parse(reader);
         	/**
@@ -152,7 +150,12 @@ public class JsonHandler {
 	 * @return
 	 */
 	public static String getValue(JSONObject JObject, String key) {
-		return JObject.getString(key).toString();
+		try {
+			return JObject.getString(key).toString();
+		} catch (JSONException e) {
+			System.out.println("Se ha producido un error al tratar de recuperar los datos del arvhivo JSON.");
+			return null;
+		}
 	}
 	
 }

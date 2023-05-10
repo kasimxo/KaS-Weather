@@ -29,7 +29,6 @@ public class CSVreader {
 		s = OsPaths.cleanPath(s);
 		Path inputPath = Paths.get(s);
 		List<String> inputData = Files.readAllLines(inputPath,StandardCharsets.ISO_8859_1);
-		System.out.println("hemos pasado el char encoding");
 		HashMap<String,Integer> mapeado = new HashMap<String,Integer>(); 
 		for (String linea : inputData) {
 			String[] splited = linea.split(";");
@@ -40,6 +39,7 @@ public class CSVreader {
 		}
 		int output = -1;
 		output = mapeado.get(mun);
+		System.out.println("El código de: " + mun + " es: " + output);
 		return output;
 	}
 	

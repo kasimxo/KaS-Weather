@@ -70,3 +70,9 @@ CREATE TABLE IF NOT EXISTS 'HUMIDITY' (
   PRIMARY KEY ('Cod_mun','Fecha'),
   FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
 ) ;
+
+--Create views
+CREATE VIEW 'TEMPERATURA' AS 
+SELECT C.Provincia as 'PROVINCIA', C.Nombre as 'MUNICIPIO', T.Fecha, T.T_max as 'Ta MAXIMA', T.T_min as 'Ta MINIMA', T.T_max_rel as 'SENSACION TERMICA MAXIMA', T.T_min_rel as 'SENSACION TERMICA MINIMA'
+FROM TEMPERATURE T 
+JOIN CODES C on C.Cod_mun=T.Cod_mun;

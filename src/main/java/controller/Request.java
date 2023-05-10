@@ -67,7 +67,7 @@ public class Request {
 			}
 			return rawData;
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Se ha producido un error tratando de obtener los datos del servidor.");
 		}
 		return null;
 	}

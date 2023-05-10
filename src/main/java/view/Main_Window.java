@@ -83,13 +83,18 @@ public class Main_Window extends JFrame {
 					if(munCode!=-1) {
 						String url = Request.getUrlConsulta(munCode);
 						String s = Request.getRawData(url);
-						try {
-							List<String> formato = Format.rawDataToList(s);
-							for (String string : formato) {
-								System.out.print(string);
+						if(s!=null) {
+							try {
+								List<String> formato = Format.rawDataToList(s);
+								for (String string : formato) {
+									System.out.print(string);
+								}
+							} catch (FileNotFoundException e1) {
+								e1.printStackTrace();
 							}
-						} catch (FileNotFoundException e1) {
-							e1.printStackTrace();
+							
+						} else {
+							lbl_output.setText("Estos datos no están disponbles en este momento.");
 						}
 					}
 					

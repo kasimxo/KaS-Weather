@@ -47,8 +47,7 @@ public class Main {
 		}
 
 		mDB.showSchema("CODES");
-		List<String> test = mDB.showTableContent("TEMPERATURE");
-		
+		List<String> test = mDB.showTableContent("TEMPERATURA");
 		
 	}
 

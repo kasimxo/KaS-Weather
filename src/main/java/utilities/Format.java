@@ -16,7 +16,7 @@ public class Format {
 	public static List<String> rawDataToList(String rawData) throws FileNotFoundException {
 		
 		String[] splited = rawData.split(",");
-		String path = new File("").getAbsolutePath()+"/src/main/java/test.json";
+		String path = new File("").getAbsolutePath()+"/src/main/java/Resultado_Consulta.json";
 		path = OsPaths.cleanPath(path);
 		File test = new File(path);
 		PrintStream stream = new PrintStream(test);
