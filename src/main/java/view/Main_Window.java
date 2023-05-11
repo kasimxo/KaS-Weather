@@ -45,10 +45,10 @@ public class Main_Window extends JFrame {
 	private JScrollPane screen;
 	private JTable table;
 	private JLabel lbl_output;
-	private JLabel lbl_header;
 	private JList<String> list;
 	private List<String> tablas;
 	private DefaultTableModel tableModel = new DefaultTableModel();
+	private JLabel lbl_header;
 
 	/**
 	 * Launch the application.
@@ -120,11 +120,11 @@ public class Main_Window extends JFrame {
 				}
 			}
 		});
-		btn_send.setBounds(10, 294, 100, 25);
+		btn_send.setBounds(10, 391, 100, 25);
 		contentPane.add(btn_send);
 		
 		txt_input = new JTextField();
-		txt_input.setBounds(10, 238, 235, 30);
+		txt_input.setBounds(10, 335, 235, 30);
 		contentPane.add(txt_input);
 		txt_input.setColumns(10);
 		
@@ -134,15 +134,12 @@ public class Main_Window extends JFrame {
 				txt_input.setText("");
 			}
 		});
-		btn_cancel.setBounds(145, 294, 100, 25);
+		btn_cancel.setBounds(145, 391, 100, 25);
 		contentPane.add(btn_cancel);
 		
 		screen = new JScrollPane();
-		screen.setBounds(10, 50, 826, 125);
+		screen.setBounds(10, 11, 826, 263);
 		contentPane.add(screen);
-		
-		lbl_header = new JLabel("");
-		screen.setColumnHeaderView(lbl_header);
 		DefaultListModel model = new DefaultListModel();
 		list = new JList(model);
 		tablas = Main.mDB.showAllViews();
@@ -162,16 +159,29 @@ public class Main_Window extends JFrame {
 		table = new JTable(tableModel);
 		screen.setViewportView(table);
 		
+		lbl_header = new JLabel("asdfasfd");
+		screen.setColumnHeaderView(lbl_header);
+		lbl_header.setHorizontalAlignment(SwingConstants.LEFT);
+		
 		JLabel lbl_municipio = new JLabel("Seleccionar municipio:");
-		lbl_municipio.setBounds(10, 213, 180, 25);
+		lbl_municipio.setBounds(10, 309, 180, 25);
 		contentPane.add(lbl_municipio);
 		
 		lbl_output = new JLabel("");
-		lbl_output.setBounds(10, 177, 699, 25);
+		lbl_output.setBounds(10, 273, 699, 25);
 		contentPane.add(lbl_output);
 		lbl_output.setOpaque(true);
 		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_output.setBackground(Color.WHITE);
+		
+		JButton btnDelMun = new JButton("Eliminar municipio");
+		btnDelMun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.delMW.setVisible(true);
+			}
+		});
+		btnDelMun.setBounds(668, 354, 156, 23);
+		contentPane.add(btnDelMun);
 		
 		
 		
@@ -183,16 +193,12 @@ public class Main_Window extends JFrame {
 		tableModel.setRowCount(viewContent.size()-1);
 		tableModel.setColumnCount(viewContent.get(0).split(" ").length);
 		table = new JTable(tableModel);
-		
 		for(int col = 0; col<tableModel.getColumnCount(); col++) {
 			for(int i = 0; i<headers.length; i++) {
 				headers[i]=headers[i].replace('_', ' ');
-				
 			}
 			tableModel.setColumnIdentifiers(headers);
 		}
-		
-		//header.getColumnModel().getColumn(ABORT);
 		
 		for (int row = 1; row < tableModel.getRowCount(); row++) {
 			String[] linea = viewContent.get(row).split(" ");

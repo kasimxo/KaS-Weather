@@ -37,6 +37,7 @@ public class JsonHandler {
 	
 	/**
 	 * This method will read the JSON file and insert all the corresponding Temperature data into de data base.
+	 * Good luck trying to understand it, not my proudest work.
 	 */
 	public static void sqlInsertTemperature() {
 		//JSON parser object to parse read file
@@ -56,7 +57,7 @@ public class JsonHandler {
 			municipio = j.get("nombre").toString();
 			JSONObject j2 = (JSONObject) j.get("prediccion");
 			JSONArray jA = (JSONArray) j2.get("dia");
-			String output2 = "";
+			String valuesTemperature = "";
 			String codmun = "" + CSVreader.munCode(municipio);
 			String prov = "" + CSVreader.getProv(municipio);
 			try {
@@ -77,17 +78,50 @@ public class JsonHandler {
 					String maxRel = sensTerm.getString("maxima");
 					String minRel = sensTerm.getString("minima");
 					
+					valuesTemperature+=codmun+",\""+f + "\"," + max + "," + min + "," +maxRel+","+minRel;
+					Main.mDB.insertValues("TEMPERATURE", valuesTemperature);
+					valuesTemperature="";
+					
 					JSONArray wind = new JSONArray(j3.get("viento").toString());
 					JSONObject windD = (JSONObject) wind.get(0);
 					String direccion =""+ windD.getString("direccion");
 					String vel = ""+windD.getString("velocidad");
-					String rachamax = "0";
+					
+					JSONArray rachaMaxArr = new JSONArray(j3.get("rachaMax").toString());
+					JSONObject rachaMaxObj = (JSONObject) rachaMaxArr.get(0);
+					String rachamax = ""+rachaMaxObj.getString("value");
+					
 					Main.mDB.insertValues("WIND", "\""+codmun+"\",\""+f+"\",\""+direccion+"\",\""+vel+"\",\""+rachamax+"\"");
-					System.out.println("Se ha insertado en la tabla viento");
-					System.out.println(f);
-					output2+=codmun+",\""+f + "\"," + max + "," + min + "," +maxRel+","+minRel;
-					Main.mDB.insertValues("TEMPERATURE", output2);
-					output2="";
+					
+					JSONObject humidityObj = new JSONObject(j3.get("humedadRelativa").toString());
+					String humidityMax = ""+humidityObj.getString("maxima");
+					String humidityMin = ""+humidityObj.getString("minima");
+					String valuesHumidity = "\""+codmun+"\",\""+f+"\",\""+humidityMax+"\",\""+humidityMin+"\"";
+					
+					Main.mDB.insertValues("HUMIDITY", valuesHumidity);
+					
+					JSONArray precipitationArr = new JSONArray(j3.get("probPrecipitacion").toString());
+					JSONObject precipitationObj = (JSONObject) precipitationArr.get(0);
+					String valorPrecipitation = ""+precipitationObj.getString("value");
+					String valuesPrecipitation = "\""+codmun+"\",\""+f+"\",\""+valorPrecipitation+"\"";
+					
+					Main.mDB.insertValues("PRECIPITATION", valuesPrecipitation);
+					
+					JSONArray skyArr = new JSONArray(j3.get("estadoCielo").toString());
+					JSONObject skyObj = (JSONObject) skyArr.get(0);
+					String valor = ""+skyObj.getString("value");
+					String descripcion = ""+skyObj.getString("descripcion");
+					String uvMax = ""+j3.getString("uvMax");
+					String valuesSky = "\""+codmun+"\",\""+f+"\",\""+valor+"\",\""+descripcion+"\",\""+uvMax+"\"";
+					
+					Main.mDB.insertValues("SKY", valuesSky);
+					
+					JSONArray snowArr = new JSONArray(j3.get("cotaNieveProv").toString());
+					JSONObject snowObj = (JSONObject) snowArr.get(0);
+					String valorSnow = ""+snowObj.getString("value");
+					String valuesSnow = "\""+codmun+"\",\""+f+"\",\""+valorSnow+"\"";
+					
+					Main.mDB.insertValues("SNOW", valuesSnow);
 				}
 			} catch (SQLException e) {
 				System.out.println("Ya se hab�a hecho esa consulta hoy.");
