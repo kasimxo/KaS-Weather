@@ -73,7 +73,7 @@ public class Main_Window extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
 		setTitle("KaS-Weather");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -138,7 +138,7 @@ public class Main_Window extends JFrame {
 		contentPane.add(btn_cancel);
 		
 		screen = new JScrollPane();
-		screen.setBounds(10, 50, 699, 125);
+		screen.setBounds(10, 50, 826, 125);
 		contentPane.add(screen);
 		
 		lbl_header = new JLabel("");
@@ -152,7 +152,7 @@ public class Main_Window extends JFrame {
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				String selectedView = tablas.get(list.getSelectedIndex());
+				String selectedView = tablas.get(list.getSelectedIndex()).replace(' ', '_');
 				mostrarView(selectedView);
 				System.out.println("El index seleccionado es: " + list.getSelectedIndex() + " que corresponde con el ítem: " + tablas.get(list.getSelectedIndex()));
 			}
@@ -185,6 +185,10 @@ public class Main_Window extends JFrame {
 		table = new JTable(tableModel);
 		
 		for(int col = 0; col<tableModel.getColumnCount(); col++) {
+			for(int i = 0; i<headers.length; i++) {
+				headers[i]=headers[i].replace('_', ' ');
+				
+			}
 			tableModel.setColumnIdentifiers(headers);
 		}
 		

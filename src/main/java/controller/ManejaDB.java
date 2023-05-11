@@ -202,7 +202,7 @@ public class ManejaDB {
 			String sql = "SELECT * FROM sqlite_master where type = \"view\";";
 			ResultSet result = sentencia.executeQuery(sql);
 			while (result.next()) {
-				tablas.add(result.getString(2));
+				tablas.add(result.getString(2).replace('_', ' '));
 				System.out.println(result.getString(2));
 			}
 		} catch (SQLException SqlE) {
@@ -243,20 +243,19 @@ public class ManejaDB {
 			int columnsNumber = rsmd.getColumnCount();
 			String labels = "";
 			for(int i = 1; i<=columnsNumber; i++)  {
-				labels+=rsmd.getColumnLabel(i)+" ";
+				String label = rsmd.getColumnLabel(i)+" ";
+				labels+=label;
 			}
 			table.add(labels);
-			System.out.println(table.get(0));
 			
 			//A partir de aquí dará error si la tabla está vacía.
 			while(result.next()) {
 				String linea = "";
 				for(int i = 1; i<=columnsNumber; i++)  {
-					linea += result.getObject(i)+" ";
-					System.out.print(result.getObject(i)+" ");
+					String resultado = result.getObject(i)+" ";
+					linea +=resultado;
 				}
 				table.add(linea);
-				System.out.println();
 			}
 			
 		} catch (SQLException SqlE) {
