@@ -151,7 +151,7 @@ public class Main_Window extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				String selectedView = tablas.get(list.getSelectedIndex()).replace(' ', '_');
 				mostrarView(selectedView);
-				System.out.println("El index seleccionado es: " + list.getSelectedIndex() + " que corresponde con el ítem: " + tablas.get(list.getSelectedIndex()));
+				System.out.println("El index seleccionado es: " + list.getSelectedIndex() + " que corresponde con el ï¿½tem: " + tablas.get(list.getSelectedIndex()));
 			}
 		});
 		screen.setRowHeaderView(list);
@@ -200,7 +200,7 @@ public class Main_Window extends JFrame {
 			tableModel.setColumnIdentifiers(headers);
 		}
 		
-		for (int row = 1; row < tableModel.getRowCount(); row++) {
+		for (int row = 1; row <= tableModel.getRowCount(); row++) {
 			String[] linea = viewContent.get(row).split(" ");
 			for(int i = 0; i<linea.length; i++) {
 				tableModel.setValueAt(linea[i], row-1, i);
