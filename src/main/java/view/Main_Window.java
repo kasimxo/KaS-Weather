@@ -177,10 +177,11 @@ public class Main_Window extends JFrame {
 		JButton btnDelMun = new JButton("Eliminar municipio");
 		btnDelMun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Main.delMW.refreshMun();
 				Main.delMW.setVisible(true);
 			}
 		});
-		btnDelMun.setBounds(668, 354, 156, 23);
+		btnDelMun.setBounds(622, 354, 202, 23);
 		contentPane.add(btnDelMun);
 		
 		
