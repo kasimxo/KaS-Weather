@@ -266,6 +266,42 @@ public class ManejaDB {
 		return table;
 	}
 	
+	public List<String> showFromMun(String selectedView, String munName) {
+		List<String> table = new ArrayList<String>();
+		try {
+			System.out.println(selectedView);
+			
+			Statement sentencia = c.createStatement();
+			String sql = "Select * from "+selectedView+" where Municipio=\""+munName+"\";";
+			ResultSet result = sentencia.executeQuery(sql);
+			ResultSetMetaData rsmd = result.getMetaData();
+			int columnsNumber = rsmd.getColumnCount();
+			String labels = "";
+			for(int i = 1; i<=columnsNumber; i++)  {
+				String label = rsmd.getColumnLabel(i)+" ";
+				labels+=label;
+			}
+			table.add(labels);
+			
+			//A partir de aquí dará error si la tabla está vacía.
+			while(result.next()) {
+				String linea = "";
+				for(int i = 1; i<=columnsNumber; i++)  {
+					String resultado = result.getObject(i)+" ";
+					linea +=resultado;
+				}
+				table.add(linea);
+			}
+			
+		} catch (SQLException SqlE) {
+			Main.OL.outputText("La tabla "+selectedView+" esta vacía.");
+			System.out.println("La tabla "+selectedView+" esta vacía.");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return table;	}
+	
 	/**
 	 * This method will return all entries in a specified table column
 	 * @param tableName
@@ -330,7 +366,7 @@ public class ManejaDB {
 			return null;
 		}
 	}
-	
+ 	
 	/**
 	 * This function will show the schema of all the tables inside the data base.
 	 * It's intended for debugging.

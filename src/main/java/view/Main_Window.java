@@ -158,7 +158,13 @@ public class Main_Window extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				String selectedView = tablas.get(list.getSelectedIndex()).replace(' ', '_');
-				mostrarView(selectedView);
+				int indexMun = mostrarMun.getSelectedIndex();
+				String selectedMunFromIndex = mostrarMun.getItemAt(indexMun).toString();
+				if(selectedMunFromIndex!=null) {
+					mostrarView(selectedView, selectedMunFromIndex);
+				} else {
+					mostrarView(selectedView);
+				}
 			}
 		});
 		screen.setRowHeaderView(list);
@@ -197,8 +203,8 @@ public class Main_Window extends JFrame {
 		
 		actualizarMun();
 		
-		JLabel lblNewLabel = new JLabel("Mostrar municipio");
-		lblNewLabel.setBounds(291, 358, 169, 15);
+		JLabel lblNewLabel = new JLabel("Seleccionar municipio");
+		lblNewLabel.setBounds(300, 350, 169, 25);
 		contentPane.add(lblNewLabel);
 		
 		
@@ -213,9 +219,31 @@ public class Main_Window extends JFrame {
 		List<String> municipiosList = Main.mDB.showTableColumn("CODES", "Nombre");
 		String[] municipios = municipiosList.toArray(new String[municipiosList.size()]);
 		mostrarMun = new JComboBox(municipios);
-		mostrarMun.setBounds(301, 374, 250, 24);
+		mostrarMun.setBounds(300, 375, 250, 25);
 		contentPane.add(mostrarMun);
 
+	}
+	
+	private void mostrarView(String selectedView, String mun) {
+		List<String> viewContent = Main.mDB.showFromMun(selectedView, mun);
+		System.out.println(viewContent);
+		String[] headers = viewContent.get(0).split(" ");
+		tableModel.setRowCount(viewContent.size()-1);
+		tableModel.setColumnCount(viewContent.get(0).split(" ").length);
+		table = new JTable(tableModel);
+		for(int col = 0; col<tableModel.getColumnCount(); col++) {
+			for(int i = 0; i<headers.length; i++) {
+				headers[i]=headers[i].replace('_', ' ');
+			}
+			tableModel.setColumnIdentifiers(headers);
+		}
+		
+		for (int row = 1; row <= tableModel.getRowCount(); row++) {
+			String[] linea = viewContent.get(row).split(" ");
+			for(int i = 0; i<linea.length; i++) {
+				tableModel.setValueAt(linea[i], row-1, i);
+			}
+		}
 	}
 
 	private void mostrarView(String selectedView) {
