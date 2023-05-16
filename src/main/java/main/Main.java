@@ -24,6 +24,7 @@ import view.Insert_Mun_Window;
 import view.Main_Window;
 import view.Preferences_Window;
 import utilities.CSVreader;
+import utilities.ConfigFileHandler;
 import utilities.OsPaths;
 import utilities.OutputLog;
 
@@ -34,6 +35,7 @@ public class Main {
 	public static Insert_Mun_Window insMW;
 	public static Preferences_Window pW;
 	public static OutputLog OL;
+	public static File configFile;
 	
 	/**
 	 * Some parameters from system for screen display
@@ -53,6 +55,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		readSys();
+		configFile = ConfigFileHandler.checkConfigFile();
 		
 		OL = new OutputLog();
 		
@@ -66,6 +69,9 @@ public class Main {
 		insMW = new Insert_Mun_Window();
 		
 		pW = new Preferences_Window();
+		if(configFile==null) {
+			pW.setVisible(true);
+		}
 		
 		if(buffer!=null) {
 			mW.setScreen(buffer);

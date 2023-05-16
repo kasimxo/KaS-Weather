@@ -17,6 +17,7 @@ import java.util.Scanner;
 
 import main.Main;
 import utilities.CSVreader;
+import utilities.ConfigFileHandler;
 import utilities.OsPaths;
 
 /**
@@ -32,6 +33,7 @@ public class ManejaDB {
 	private boolean newDataBase;
 	
 	public ManejaDB() throws IOException, SQLException {
+		String defaultMun = ConfigFileHandler.readDefaultMun();
 		this.newDataBase=false;
 		checkActualDataBase();
 		String pathDataBase = new File("").getAbsolutePath()+"/src/main/java/dataBase/"+dataBaseName;
