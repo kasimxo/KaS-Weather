@@ -266,6 +266,70 @@ public class ManejaDB {
 		return table;
 	}
 	
+	/**
+	 * This method will return all entries in a specified table column
+	 * @param tableName
+	 * @param columnName
+	 * @return
+	 */
+	public List<String> showTableColumn(String tableName, String columnName) {
+		List<String> content = new ArrayList<String>();
+		try {
+			System.out.println(tableName);
+			
+			Statement sentencia = c.createStatement();
+			String sql = "Select "+columnName+" from "+tableName+";";
+			ResultSet result = sentencia.executeQuery(sql);
+			
+			//A partir de aquí dará error si la tabla está vacía.
+			while(result.next()) {
+				content.add(result.getString(1));
+			}
+			
+		} catch (SQLException SqlE) {
+			Main.OL.outputText("Ha ocurrido un error tratando de recuperar los datos de la tabla '" + tableName + "' columna '" + columnName + "'.");
+			System.out.println("Ha ocurrido un error tratando de recuperar los datos de la tabla '" + tableName + "' columna '" + columnName + "'.");
+		}
+		return content;
+	}
+	
+	/**
+	 * This method will return all entries in a specified table column as an array
+	 * <b>WILL ONLY WORK IF BOOLEAN IS TRUE</b>
+	 * @param tableName
+	 * @param columnName
+	 * @return
+	 */
+	public String[] showTableColumn(String tableName, String columnName, boolean array) {
+		if (array) {
+			String[] content;
+			try {
+				System.out.println(tableName);
+				
+				Statement sentencia = c.createStatement();
+				String sql = "Select "+columnName+" from "+tableName+";";
+				ResultSet result = sentencia.executeQuery(sql);
+				int rowCount = result.getRow();
+				result.first();
+				content = new String[rowCount];
+				int index = 0;
+				
+				//A partir de aquí dará error si la tabla está vacía.
+				while(result.next() && index<=content.length) {
+					content[index] = result.getString(1);
+					index++;
+				}
+				return content;
+			} catch (SQLException SqlE) {
+				SqlE.printStackTrace();
+				Main.OL.outputText("Ha ocurrido un error tratando de recuperar los datos de la tabla '" + tableName + "' columna '" + columnName + "'.");
+				System.out.println("Ha ocurrido un error tratando de recuperar los datos de la tabla '" + tableName + "' columna '" + columnName + "'.");
+			}
+			return null;
+		} else {
+			return null;
+		}
+	}
 	
 	/**
 	 * This function will show the schema of all the tables inside the data base.

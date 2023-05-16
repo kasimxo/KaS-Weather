@@ -16,6 +16,7 @@ import utilities.CSVreader;
 import utilities.Format;
 import utilities.JsonHandler;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -37,6 +38,9 @@ import javax.swing.JList;
 import javax.swing.JMenuItem;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JComboBox;
 
 public class Main_Window extends JFrame {
 
@@ -49,6 +53,8 @@ public class Main_Window extends JFrame {
 	private List<String> tablas;
 	private DefaultTableModel tableModel = new DefaultTableModel();
 	private JLabel lbl_header;
+	private JScrollPane tableContainer;
+	private JComboBox mostrarMun;
 
 	/**
 	 * Launch the application.
@@ -155,14 +161,17 @@ public class Main_Window extends JFrame {
 		});
 		screen.setRowHeaderView(list);
 		
-		table = new JTable(tableModel);
-		screen.setViewportView(table);
-		
-		lbl_header = new JLabel("asdfasfd");
+		lbl_header = new JLabel("");
 		screen.setColumnHeaderView(lbl_header);
 		lbl_header.setHorizontalAlignment(SwingConstants.LEFT);
 		
-		JLabel lbl_municipio = new JLabel("Seleccionar municipio:");
+		tableContainer = new JScrollPane();
+		screen.setViewportView(tableContainer);
+		
+		table = new JTable(tableModel);
+		tableContainer.setViewportView(table);
+		
+		JLabel lbl_municipio = new JLabel("Insertar municipio");
 		lbl_municipio.setBounds(10, 309, 180, 25);
 		contentPane.add(lbl_municipio);
 		
@@ -182,6 +191,16 @@ public class Main_Window extends JFrame {
 		});
 		btnDelMun.setBounds(622, 354, 202, 23);
 		contentPane.add(btnDelMun);
+		
+		List<String> municipiosList = Main.mDB.showTableColumn("CODES", "Nombre");
+		String[] municipios = municipiosList.toArray(new String[municipiosList.size()]);
+		mostrarMun = new JComboBox( municipios);
+		mostrarMun.setBounds(301, 374, 250, 24);
+		contentPane.add(mostrarMun);
+		
+		JLabel lblNewLabel = new JLabel("Mostrar municipio");
+		lblNewLabel.setBounds(291, 358, 169, 15);
+		contentPane.add(lblNewLabel);
 		
 		
 		

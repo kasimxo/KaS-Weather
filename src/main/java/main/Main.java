@@ -47,7 +47,6 @@ public class Main {
 		delMW = new Delete_Mun_Window();
 		delMW.setVisible(false);
 		
-		
 		if(buffer!=null) {
 			mW.setScreen(buffer);
 		}
