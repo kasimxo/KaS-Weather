@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import main.Main;
+import utilities.CSVreader;
 import utilities.OsPaths;
 
 /**
@@ -302,6 +303,30 @@ public class ManejaDB {
 			System.out.println("Error durante el esquema.");
 		}
 	}
+	
+	/**
+	 * This method will delete all data of a selected municipio from every table.
+	 * @param munName
+	 */
+	public void deleteMun(String munName) {
+		try {
+			
+			Statement sentencia = c.createStatement();
+			String munCode = ""+CSVreader.munCode(munName);
+			String sql = "DELETE FROM CODES WHERE Cod_mun=\""+munCode+"\";";
+			int result = sentencia.executeUpdate(sql);
+			if(result>0) {
+				System.out.println("Se han borrado los datos con éxito.");
+			}
+			
+		} catch (SQLException SqlE) {
+			System.err.println("No se han podido borrar los datos seleccionados.");
+		} catch (Exception e) {
+			System.err.println("No se ha encontrado el municipio especificado.");
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * This function will show the schema of a specific table.

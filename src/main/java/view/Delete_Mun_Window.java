@@ -13,6 +13,9 @@ import main.Main;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class Delete_Mun_Window extends JFrame {
 
@@ -43,7 +46,7 @@ public class Delete_Mun_Window extends JFrame {
 	public Delete_Mun_Window() {
 		setTitle("Borrar municipio");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 370, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -51,22 +54,38 @@ public class Delete_Mun_Window extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lbl_Selection = new JLabel("Selecciona el municipio para borrar:");
-		lbl_Selection.setBounds(50, 63, 257, 15);
+		lbl_Selection.setBounds(50, 30, 257, 15);
 		contentPane.add(lbl_Selection);
 		
 		model = new DefaultListModel();
-		list = new JList(model);
-		
-		list.setBounds(60, 90, 250, 50);
-		contentPane.add(list);
 		
 		JButton btnDelete = new JButton("Borrar");
-		btnDelete.setBounds(12, 207, 117, 25);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*Aquí es donde metemos el coger el municipio de la lista y borrarlo de la base de datos*/
+				
+				String[] selectedMunArr = municipios.get(list.getSelectedIndex()).split(" ");
+				Main.mDB.deleteMun(selectedMunArr[2]);
+				setVisible(false);
+			}
+		});
+		btnDelete.setBounds(50, 150, 100, 25);
 		contentPane.add(btnDelete);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(267, 207, 117, 25);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		btnCancelar.setBounds(200, 150, 100, 25);
 		contentPane.add(btnCancelar);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(50, 50, 250, 80);
+		contentPane.add(scrollPane);
+		list = new JList(model);
+		scrollPane.setViewportView(list);
 	}
 	
 	/**

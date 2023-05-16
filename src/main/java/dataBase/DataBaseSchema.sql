@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS 'PRECIPITATION' (
   'Fecha' varchar(30) NOT NULL,
   'Valor' varchar(30),
   PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
+  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun') ON DELETE CASCADE
 ) ;
 
 CREATE TABLE IF NOT EXISTS 'SNOW' (
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS 'SNOW' (
   'Fecha' varchar(30) NOT NULL,
   'Valor' varchar(30),
   PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
+  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun') ON DELETE CASCADE
 ) ;
 
 CREATE TABLE IF NOT EXISTS 'SKY' (
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS 'SKY' (
   'Descripcion' varchar(50),
   'UVMax' varchar(2),
   PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
+  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun') ON DELETE CASCADE
 ) ;
 
 CREATE TABLE IF NOT EXISTS 'WIND' (
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS 'WIND' (
   'Velocidad' varchar(50),
   'RachaMax' varchar(2),
   PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
+  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun') ON DELETE CASCADE
 ) ;
 
 CREATE TABLE IF NOT EXISTS 'TEMPERATURE' (
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS 'TEMPERATURE' (
   'T_max_rel' varchar(2),
   'T_min_rel' varchar(2),
   PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
+  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun') ON DELETE CASCADE
 ) ;
 
 CREATE TABLE IF NOT EXISTS 'HUMIDITY' (
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS 'HUMIDITY' (
   'Max' varchar(30),
   'Min' varchar(50),
   PRIMARY KEY ('Cod_mun','Fecha'),
-  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun')
+  FOREIGN KEY ('Cod_mun') REFERENCES CODES('Cod_mun') ON DELETE CASCADE
 ) ;
 
 --Create views

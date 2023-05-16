@@ -151,7 +151,6 @@ public class Main_Window extends JFrame {
 			public void mouseReleased(MouseEvent e) {
 				String selectedView = tablas.get(list.getSelectedIndex()).replace(' ', '_');
 				mostrarView(selectedView);
-				System.out.println("El index seleccionado es: " + list.getSelectedIndex() + " que corresponde con el �tem: " + tablas.get(list.getSelectedIndex()));
 			}
 		});
 		screen.setRowHeaderView(list);
