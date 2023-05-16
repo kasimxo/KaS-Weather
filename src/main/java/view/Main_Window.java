@@ -54,7 +54,7 @@ public class Main_Window extends JFrame {
 	private DefaultTableModel tableModel = new DefaultTableModel();
 	private JLabel lbl_header;
 	private JScrollPane tableContainer;
-	private JComboBox mostrarMun;
+	private JComboBox mostrarMun = new JComboBox();
 
 	/**
 	 * Launch the application.
@@ -109,6 +109,7 @@ public class Main_Window extends JFrame {
 								for (String string : formato) {
 									System.out.print(string);
 								}
+								
 							} catch (FileNotFoundException e1) {
 								e1.printStackTrace();
 							}
@@ -121,6 +122,7 @@ public class Main_Window extends JFrame {
 					txt_input.setText("");
 					JsonHandler.toDataBase();
 					lbl_header.setText(JsonHandler.municipio);
+					actualizarMun();
 				} else {
 					lbl_output.setText("Introduce el nombre de un municipio.");
 				}
@@ -192,11 +194,8 @@ public class Main_Window extends JFrame {
 		btnDelMun.setBounds(622, 354, 202, 23);
 		contentPane.add(btnDelMun);
 		
-		List<String> municipiosList = Main.mDB.showTableColumn("CODES", "Nombre");
-		String[] municipios = municipiosList.toArray(new String[municipiosList.size()]);
-		mostrarMun = new JComboBox( municipios);
-		mostrarMun.setBounds(301, 374, 250, 24);
-		contentPane.add(mostrarMun);
+		
+		actualizarMun();
 		
 		JLabel lblNewLabel = new JLabel("Mostrar municipio");
 		lblNewLabel.setBounds(291, 358, 169, 15);
@@ -206,6 +205,19 @@ public class Main_Window extends JFrame {
 		
 	}
 	
+	/**
+	 * This method refreshes the JComboBox
+	 */
+	private void actualizarMun() {
+		contentPane.remove(mostrarMun);
+		List<String> municipiosList = Main.mDB.showTableColumn("CODES", "Nombre");
+		String[] municipios = municipiosList.toArray(new String[municipiosList.size()]);
+		mostrarMun = new JComboBox(municipios);
+		mostrarMun.setBounds(301, 374, 250, 24);
+		contentPane.add(mostrarMun);
+
+	}
+
 	private void mostrarView(String selectedView) {
 		List<String> viewContent = Main.mDB.showViewContent(selectedView);
 		String[] headers = viewContent.get(0).split(" ");
