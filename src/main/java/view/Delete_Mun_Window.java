@@ -16,9 +16,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
+import java.awt.Toolkit;
 
 public class Delete_Mun_Window extends JFrame {
 
+	private int width=450;
+	private int height=300;
 	private JPanel contentPane;
 	private JList list;
 	private List<String> municipios;
@@ -44,9 +47,12 @@ public class Delete_Mun_Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Delete_Mun_Window() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Delete_Mun_Window.class.getResource("/resources/icon.png")));
 		setTitle("Borrar municipio");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 370, 300);
+		int x = (int) (Main.width/2) - width/2;
+		int y = (int) (Main.height/2)- height/2;
+		setBounds(x,y,width,height);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -66,6 +72,7 @@ public class Delete_Mun_Window extends JFrame {
 				
 				String[] selectedMunArr = municipios.get(list.getSelectedIndex()).split(" ");
 				Main.mDB.deleteMun(selectedMunArr[2]);
+				Main.mW.deleteItemFromComboBox(list.getSelectedIndex());
 				setVisible(false);
 			}
 		});
@@ -92,6 +99,7 @@ public class Delete_Mun_Window extends JFrame {
 	 * This method makes sure to add every mun to the list.
 	 */
 	public void refreshMun() {
+		model.removeAllElements();
 		municipios = Main.mDB.showTableContent("CODES");
 		municipios.remove(0);
 		for (String string : municipios) {

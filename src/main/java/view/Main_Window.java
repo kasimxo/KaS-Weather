@@ -44,8 +44,9 @@ import javax.swing.JComboBox;
 
 public class Main_Window extends JFrame {
 
+	private int width=900;
+	private int height=600;
 	private JPanel contentPane;
-	private JTextField txt_input;
 	private JScrollPane screen;
 	private JTable table;
 	private JLabel lbl_output;
@@ -56,6 +57,7 @@ public class Main_Window extends JFrame {
 	private JScrollPane tableContainer;
 	private JComboBox mostrarMun = new JComboBox();
 	private JButton btnInsertarMunicipio;
+	private JButton btnPreferencias;
 
 	/**
 	 * Launch the application.
@@ -80,70 +82,14 @@ public class Main_Window extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
 		setTitle("KaS-Weather");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 900, 600);
+		int x = (int) (Main.width/2) - width/2;
+		int y = (int) (Main.height/2)- height/2;
+		setBounds(x, y, width, height);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JButton btn_send = new JButton("Aceptar");
-		btn_send.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(!txt_input.getText().isEmpty()) {
-					String mun = txt_input.getText();
-					int munCode = -1;
-					
-					try {
-						munCode = CSVreader.munCode(mun);
-					} catch (Exception e1) {
-						lbl_output.setText("No se ha encontrado la ciudad " + mun);
-						e1.printStackTrace();
-					}
-					
-					if(munCode!=-1) {
-						String url = Request.getUrlConsulta(munCode);
-						String s = Request.getRawData(url);
-						if(s!=null) {
-							try {
-								List<String> formato = Format.rawDataToList(s);
-								for (String string : formato) {
-									System.out.print(string);
-								}
-								
-							} catch (FileNotFoundException e1) {
-								e1.printStackTrace();
-							}
-							
-						} else {
-							lbl_output.setText("Estos datos no están disponbles en este momento.");
-						}
-					}
-					
-					txt_input.setText("");
-					JsonHandler.toDataBase();
-					actualizarMun();
-				} else {
-					lbl_output.setText("Introduce el nombre de un municipio.");
-				}
-			}
-		});
-		btn_send.setBounds(10, 391, 100, 25);
-		contentPane.add(btn_send);
-		
-		txt_input = new JTextField();
-		txt_input.setBounds(10, 335, 235, 30);
-		contentPane.add(txt_input);
-		txt_input.setColumns(10);
-		
-		JButton btn_cancel = new JButton("Cancelar");
-		btn_cancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txt_input.setText("");
-			}
-		});
-		btn_cancel.setBounds(145, 391, 100, 25);
-		contentPane.add(btn_cancel);
 		
 		screen = new JScrollPane();
 		screen.setBounds(10, 11, 826, 263);
@@ -179,10 +125,6 @@ public class Main_Window extends JFrame {
 		table = new JTable(tableModel);
 		tableContainer.setViewportView(table);
 		
-		JLabel lbl_municipio = new JLabel("Insertar municipio");
-		lbl_municipio.setBounds(10, 309, 180, 25);
-		contentPane.add(lbl_municipio);
-		
 		lbl_output = new JLabel("");
 		lbl_output.setBounds(10, 273, 699, 25);
 		contentPane.add(lbl_output);
@@ -197,19 +139,33 @@ public class Main_Window extends JFrame {
 				Main.delMW.setVisible(true);
 			}
 		});
-		btnDelMun.setBounds(622, 354, 202, 23);
+		btnDelMun.setBounds(650, 350, 150, 25);
 		contentPane.add(btnDelMun);
 		
 		
 		actualizarMun();
 		
 		JLabel lblNewLabel = new JLabel("Seleccionar municipio");
-		lblNewLabel.setBounds(300, 350, 169, 25);
+		lblNewLabel.setBounds(10, 325, 169, 25);
 		contentPane.add(lblNewLabel);
 		
 		btnInsertarMunicipio = new JButton("Insertar municipio");
-		btnInsertarMunicipio.setBounds(622, 392, 202, 23);
+		btnInsertarMunicipio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.insMW.setVisible(true);
+			}
+		});
+		btnInsertarMunicipio.setBounds(650, 400, 150, 25);
 		contentPane.add(btnInsertarMunicipio);
+		
+		btnPreferencias = new JButton("Preferencias");
+		btnPreferencias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Main.pW.setVisible(true);
+			}
+		});
+		btnPreferencias.setBounds(650, 450, 150, 25);
+		contentPane.add(btnPreferencias);
 		
 		
 		
@@ -218,13 +174,21 @@ public class Main_Window extends JFrame {
 	/**
 	 * This method refreshes the JComboBox
 	 */
-	private void actualizarMun() {
+	public void actualizarMun() {
 		contentPane.remove(mostrarMun);
 		List<String> municipiosList = Main.mDB.showTableColumn("CODES", "Nombre");
 		String[] municipios = municipiosList.toArray(new String[municipiosList.size()]);
 		mostrarMun = new JComboBox(municipios);
-		mostrarMun.setBounds(300, 375, 250, 25);
+		mostrarMun.setBounds(10, 350, 250, 25);
 		contentPane.add(mostrarMun);
+	}
+	
+	public void deleteItemFromComboBox(int index) {
+		mostrarMun.removeItemAt(index);
+	}
+	
+	public void setlbl_Output(String text) {
+		lbl_output.setText(text);
 	}
 	
 	private void mostrarView(String selectedView, String mun) {

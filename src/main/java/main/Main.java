@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +22,7 @@ import kong.unirest.Unirest;
 import view.Delete_Mun_Window;
 import view.Insert_Mun_Window;
 import view.Main_Window;
+import view.Preferences_Window;
 import utilities.CSVreader;
 import utilities.OsPaths;
 import utilities.OutputLog;
@@ -29,7 +32,16 @@ public class Main {
 	public static Main_Window mW;
 	public static Delete_Mun_Window delMW;
 	public static Insert_Mun_Window insMW;
+	public static Preferences_Window pW;
 	public static OutputLog OL;
+	
+	/**
+	 * Some parameters from system for screen display
+	 */
+	public static Dimension screenSize;
+	public static double width;
+	public static double height;
+	
 	/**
 	 * La Base de Datos almacena los datos de todas las consultas que realizamos en un determinado d�a 
 	 * para evitar realizar consultas duplicadas.
@@ -39,6 +51,9 @@ public class Main {
 	public static String buffer;
 	
 	public static void main(String[] args) {
+		
+		readSys();
+		
 		OL = new OutputLog();
 		
 		cargarDataBase();
@@ -47,15 +62,24 @@ public class Main {
 		mW.setVisible(true);
 		
 		delMW = new Delete_Mun_Window();
-		delMW.setVisible(false);
 		
 		insMW = new Insert_Mun_Window();
-		insMW.setVisible(false);
+		
+		pW = new Preferences_Window();
 		
 		if(buffer!=null) {
 			mW.setScreen(buffer);
 		}
 		
+	}
+
+	/**
+	 * This method will read some system properties
+	 */
+	private static void readSys() {
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		width = screenSize.getWidth();
+		height = screenSize.getHeight();
 	}
 
 	/**
