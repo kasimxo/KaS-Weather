@@ -18,6 +18,7 @@ import kong.unirest.Header;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import view.Delete_Mun_Window;
+import view.Insert_Mun_Window;
 import view.Main_Window;
 import utilities.CSVreader;
 import utilities.OsPaths;
@@ -27,6 +28,7 @@ public class Main {
 	
 	public static Main_Window mW;
 	public static Delete_Mun_Window delMW;
+	public static Insert_Mun_Window insMW;
 	public static OutputLog OL;
 	/**
 	 * La Base de Datos almacena los datos de todas las consultas que realizamos en un determinado d�a 
@@ -46,6 +48,9 @@ public class Main {
 		
 		delMW = new Delete_Mun_Window();
 		delMW.setVisible(false);
+		
+		insMW = new Insert_Mun_Window();
+		insMW.setVisible(false);
 		
 		if(buffer!=null) {
 			mW.setScreen(buffer);

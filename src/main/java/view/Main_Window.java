@@ -55,6 +55,7 @@ public class Main_Window extends JFrame {
 	private JLabel lbl_header;
 	private JScrollPane tableContainer;
 	private JComboBox mostrarMun = new JComboBox();
+	private JButton btnInsertarMunicipio;
 
 	/**
 	 * Launch the application.
@@ -121,7 +122,6 @@ public class Main_Window extends JFrame {
 					
 					txt_input.setText("");
 					JsonHandler.toDataBase();
-					lbl_header.setText(JsonHandler.municipio);
 					actualizarMun();
 				} else {
 					lbl_output.setText("Introduce el nombre de un municipio.");
@@ -169,7 +169,7 @@ public class Main_Window extends JFrame {
 		});
 		screen.setRowHeaderView(list);
 		
-		lbl_header = new JLabel("");
+		lbl_header = new JLabel("Municipio:");
 		screen.setColumnHeaderView(lbl_header);
 		lbl_header.setHorizontalAlignment(SwingConstants.LEFT);
 		
@@ -207,6 +207,10 @@ public class Main_Window extends JFrame {
 		lblNewLabel.setBounds(300, 350, 169, 25);
 		contentPane.add(lblNewLabel);
 		
+		btnInsertarMunicipio = new JButton("Insertar municipio");
+		btnInsertarMunicipio.setBounds(622, 392, 202, 23);
+		contentPane.add(btnInsertarMunicipio);
+		
 		
 		
 	}
@@ -221,12 +225,10 @@ public class Main_Window extends JFrame {
 		mostrarMun = new JComboBox(municipios);
 		mostrarMun.setBounds(300, 375, 250, 25);
 		contentPane.add(mostrarMun);
-
 	}
 	
 	private void mostrarView(String selectedView, String mun) {
 		List<String> viewContent = Main.mDB.showFromMun(selectedView, mun);
-		System.out.println(viewContent);
 		String[] headers = viewContent.get(0).split(" ");
 		tableModel.setRowCount(viewContent.size()-1);
 		tableModel.setColumnCount(viewContent.get(0).split(" ").length);
@@ -244,6 +246,7 @@ public class Main_Window extends JFrame {
 				tableModel.setValueAt(linea[i], row-1, i);
 			}
 		}
+		lbl_header.setText("Municipio: "+mun);
 	}
 
 	private void mostrarView(String selectedView) {
