@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.Reader;
 import java.sql.SQLException;
 import java.util.Iterator;
+
+import javax.swing.JOptionPane;
+
 import java.io.File;
 
 
@@ -30,7 +33,8 @@ public class JsonHandler {
 	 * Here we make sure all data in the JSON file goes into the data base
 	 */
 	public static void toDataBase() {
-		sqlInsertTemperature();
+		sqlInsertIntoDatabase();
+		Main.OL.outputText("Se han insertado todos los datos en la base de datos");
 		System.out.println("Se han insertado todos los datos en la base de datos");
 	}
 	
@@ -39,7 +43,7 @@ public class JsonHandler {
 	 * This method will read the JSON file and insert all the corresponding Temperature data into de data base.
 	 * Good luck trying to understand it, not my proudest work.
 	 */
-	public static void sqlInsertTemperature() {
+	public static void sqlInsertIntoDatabase() {
 		//JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();
         municipio = "";
@@ -62,7 +66,6 @@ public class JsonHandler {
 			String prov = "" + CSVreader.getProv(municipio);
 			try {
 				Main.mDB.insertValues("CODES", codmun+",\""+prov+"\",\""+municipio+"\"");
-				System.out.println("Se ha insertado en la tabla codes");
 				//Here we are going through all days
 				for (Object object : jA) {
 					//Here we are inside a specific day
@@ -124,9 +127,12 @@ public class JsonHandler {
 					Main.mDB.insertValues("SNOW", valuesSnow);
 				}
 			} catch (SQLException e) {
-				System.out.println("Ya se hab�a hecho esa consulta hoy.");
+				Main.OL.outputText("Ya se habia hecho esa consulta hoy");
+				System.out.println("Ya se habia hecho esa consulta hoy.");
 			}
         } catch (Exception e) {
+        	JOptionPane.showMessageDialog(null, "Ha ocurrido un error leyendo la respuesta del servidor","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+        	Main.OL.outputText("Se ha producido un error leyendo la respuesta del servidor");
         	System.out.println("Se ha producido un error leyendo la respuesta del servidor.");
             e.printStackTrace();
         } 
@@ -142,7 +148,9 @@ public class JsonHandler {
 		try {
 			return JObject.getString(key).toString();
 		} catch (JSONException e) {
-			System.out.println("Se ha producido un error al tratar de recuperar los datos del arvhivo JSON.");
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error tratando de recuperar los datos del archivo JSON","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+			Main.OL.outputText("Se ha producido un error al tratar de recuperar los datos del archivo JSON");
+			System.out.println("Se ha producido un error al tratar de recuperar los datos del archivo JSON.");
 			return null;
 		}
 	}

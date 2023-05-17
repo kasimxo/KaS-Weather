@@ -121,7 +121,7 @@ public class Preferences_Window extends JFrame {
 			displayWarning.setVisible(true);
 		}
 		
-		JLabel lblMsg = new JLabel("AVISO: No se ha encontrado el archivo configuraci\u00F3n");
+		JLabel lblMsg = new JLabel("AVISO: No se ha encontrado el archivo configuracion");
 		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 11));
 		displayWarning.add(lblMsg);
 		

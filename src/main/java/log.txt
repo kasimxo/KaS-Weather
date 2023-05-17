@@ -1,24 +1,124 @@
-Wed May 17 16:59:19 CEST 2023:
+Wed May 17 17:38:03 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:05:18 CEST 2023:
+Wed May 17 17:38:03 CEST 2023:
+No se ha encontrado la ciudad null
+Wed May 17 17:44:14 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:05:22 CEST 2023:
+Wed May 17 17:44:14 CEST 2023:
+No se ha encontrado la ciudad null
+Wed May 17 17:44:15 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 17:44:15 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 17:45:25 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:05:25 CEST 2023:
+Wed May 17 17:45:25 CEST 2023:
+No se ha encontrado la ciudad 
+Wed May 17 17:45:25 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 17:45:25 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 17:45:47 CEST 2023:
+No se ha encontrado el archivo config
+Wed May 17 17:45:47 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:08:32 CEST 2023:
+Wed May 17 17:45:47 CEST 2023:
+No se ha encontrado la ciudad null
+Wed May 17 17:45:47 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 17:45:47 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 17:46:18 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:09:15 CEST 2023:
+Wed May 17 17:46:18 CEST 2023:
+No se ha encontrado la ciudad 
+Wed May 17 17:46:19 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 17:46:19 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 18:42:41 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:09:53 CEST 2023:
+Wed May 17 18:42:41 CEST 2023:
+No se ha encontrado la ciudad 
+Wed May 17 18:42:41 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 18:42:41 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:10:39 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:10:01 CEST 2023:
+Wed May 17 19:10:39 CEST 2023:
+No se ha encontrado la ciudad 
+Wed May 17 19:10:40 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 19:10:40 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:11:00 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:11:18 CEST 2023:
+Wed May 17 19:11:00 CEST 2023:
+No se ha encontrado la ciudad Valencia
+Wed May 17 19:11:00 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 19:11:00 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:11:18 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 19:11:18 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:16:51 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:11:43 CEST 2023:
+Wed May 17 19:16:51 CEST 2023:
+No se ha encontrado la ciudad Valencia
+Wed May 17 19:16:55 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Wed May 17 19:16:55 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:17:14 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:13:41 CEST 2023:
+Wed May 17 19:17:14 CEST 2023:
+No se ha encontrado la ciudad Tarazona
+Wed May 17 19:17:16 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Wed May 17 19:17:16 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:17:40 CEST 2023:
 Se ha cargado la base de datos con exito.
-Wed May 17 17:13:56 CEST 2023:
+Wed May 17 19:17:40 CEST 2023:
+No se ha encontrado la ciudad Tarazona
+Wed May 17 19:24:23 CEST 2023:
 Se ha cargado la base de datos con exito.
+Wed May 17 19:24:25 CEST 2023:
+No se ha encontrado la ciudad Tarazona
+Wed May 17 19:24:28 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Wed May 17 19:24:28 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:24:45 CEST 2023:
+No se ha encontrado el municipio especificado
+Wed May 17 19:24:54 CEST 2023:
+Se ha cargado la base de datos con exito.
+Wed May 17 19:24:56 CEST 2023:
+No se ha encontrado la ciudad Tarazona
+Wed May 17 19:24:57 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Wed May 17 19:24:57 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:25:34 CEST 2023:
+Se ha cargado la base de datos con exito.
+Wed May 17 19:25:36 CEST 2023:
+No se ha encontrado la ciudad Tarazona
+Wed May 17 19:25:37 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Wed May 17 19:25:37 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:27:14 CEST 2023:
+Se ha cargado la base de datos con exito.
+Wed May 17 19:27:17 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Wed May 17 19:27:17 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Wed May 17 19:27:40 CEST 2023:
+Se ha cargado la base de datos con exito.
+Wed May 17 19:27:41 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Wed May 17 19:27:41 CEST 2023:
+Se han insertado todos los datos en la base de datos

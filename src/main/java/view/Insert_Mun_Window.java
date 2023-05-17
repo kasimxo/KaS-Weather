@@ -15,6 +15,8 @@ import utilities.JsonHandler;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -70,26 +72,17 @@ public class Insert_Mun_Window extends JFrame {
 					try {
 						munCode = CSVreader.munCode(mun);
 					} catch (Exception e1) {
-						Main.mW.setlbl_Output("No se ha encontrado la ciudad " + mun);
+						JOptionPane.showMessageDialog(null, "No se ha encontrado la ciudad " + mun,"KaS-Weather", JOptionPane.ERROR_MESSAGE);
+						Main.OL.outputText("No se ha encontrado la ciudad " + mun);
 						e1.printStackTrace();
 					}
 					
 					if(munCode!=-1) {
 						String url = Request.getUrlConsulta(munCode);
 						String s = Request.getRawData(url);
-						if(s!=null) {
-							try {
-								List<String> formato = Format.rawDataToList(s);
-								for (String string : formato) {
-									System.out.print(string);
-								}
-								
-							} catch (FileNotFoundException e1) {
-								e1.printStackTrace();
-							}
-							
-						} else {
-							Main.mW.setlbl_Output("Estos datos no estan disponbles en este momento.");
+						if(s==null) {
+							JOptionPane.showMessageDialog(null, "Estos datos no estan disponibles en este momento","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+							Main.OL.outputText("Estos datos no estan disponibles en este momento");
 						}
 					}
 					
@@ -97,12 +90,8 @@ public class Insert_Mun_Window extends JFrame {
 					JsonHandler.toDataBase();
 					Main.mW.actualizarMun();
 					Main.mW.mostrarView("TEMPERATURA", mun);
-				} else {
-					Main.mW.setlbl_Output("Introduce el nombre de un municipio.");
 				}
 				setVisible(false);
-				
-				
 			}
 		});
 		btn_send.setBounds(40, 137, 100, 25);

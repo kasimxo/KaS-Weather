@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import main.Main;
 import utilities.CSVreader;
 import utilities.ConfigFileHandler;
@@ -86,7 +88,7 @@ public class ManejaDB {
 		for (File file : arrayDirs) {
 			if(file.getName().compareTo(fileName)==0) {
 				Main.OL.outputText("Se ha cargado la base de datos con exito.");
-				System.out.println("Se ha cargado la base de datos con �xito.");
+				System.out.println("Se ha cargado la base de datos con exito.");
 				output=file;
 			} else {
 				deletes.add(file);
@@ -100,6 +102,7 @@ public class ManejaDB {
 			} else {
 				Main.OL.outputText("No se ha podido eliminar el archivo "+oldName+".");
 				System.out.println("No se ha podido eliminar el archivo "+oldName+".");
+				JOptionPane.showMessageDialog(null, "No se ha podido eliminar el archivo "+oldName,"KaS-Weather", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		
@@ -160,10 +163,11 @@ public class ManejaDB {
 			System.err.println("No se ha podido encontrar el esquema de la base de datos.");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			Main.OL.outputText("Ha surgido un error durante la creaci�n de la estructura de la base de datos.");
-			Main.OL.outputText("La �ltima sentencia ha sido:\n"+buffer);
-			System.out.println("Ha surgido un error durante la creaci�n de la estructura de la base de datos.");
-			System.out.println("La �ltima sentencia ha sido:\n"+buffer);
+			JOptionPane.showMessageDialog(null, "Ha surgido un error durante la creacion de la estructura de la base de datos","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+			Main.OL.outputText("Ha surgido un error durante la creacion de la estructura de la base de datos.");
+			Main.OL.outputText("La ultima sentencia ha sido:\n"+buffer);
+			System.out.println("Ha surgido un error durante la creacion de la estructura de la base de datos.");
+			System.out.println("La ultima sentencia ha sido:\n"+buffer);
 			e.printStackTrace();
 		}
 		
@@ -298,8 +302,8 @@ public class ManejaDB {
 			}
 			
 		} catch (SQLException SqlE) {
-			Main.OL.outputText("La tabla "+selectedView+" esta vacía.");
-			System.out.println("La tabla "+selectedView+" esta vacía.");
+			Main.OL.outputText("La tabla "+selectedView+" esta vacia.");
+			System.out.println("La tabla "+selectedView+" esta vacia.");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -327,6 +331,7 @@ public class ManejaDB {
 			}
 			
 		} catch (SQLException SqlE) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error tratando de recuperar los datos de la tabla","KaS-Weather", JOptionPane.ERROR_MESSAGE);
 			Main.OL.outputText("Ha ocurrido un error tratando de recuperar los datos de la tabla '" + tableName + "' columna '" + columnName + "'.");
 			System.out.println("Ha ocurrido un error tratando de recuperar los datos de la tabla '" + tableName + "' columna '" + columnName + "'.");
 		}
@@ -420,12 +425,16 @@ public class ManejaDB {
 			String sql = "DELETE FROM CODES WHERE Cod_mun=\""+munCode+"\";";
 			int result = sentencia.executeUpdate(sql);
 			if(result>0) {
+				Main.OL.outputText("Se han borrado los datos del municipio con codigo "+munCode);
 				System.out.println("Se han borrado los datos con éxito.");
 			}
 			
 		} catch (SQLException SqlE) {
+			Main.OL.outputText("No se han podido borrar los datos seleccionados.");
 			System.err.println("No se han podido borrar los datos seleccionados.");
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "No se ha encontrado el municipio especificado","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+			Main.OL.outputText("No se ha encontrado el municipio especificado");
 			System.err.println("No se ha encontrado el municipio especificado.");
 			e.printStackTrace();
 		}

@@ -31,7 +31,7 @@ public class CSVreader {
 		List<String> inputData = Files.readAllLines(inputPath,StandardCharsets.ISO_8859_1);
 		HashMap<String,Integer> mapeado = new HashMap<String,Integer>(); 
 		for (String linea : inputData) {
-			String[] splited = linea.split(";");
+			String[] splited = linea.split(",");
 			if(splited[0].compareTo("CODAUTO")!=0) {
 				String cod = splited[1] + splited[2];
 				mapeado.put(splited[4], Integer.parseInt(cod));
@@ -39,7 +39,6 @@ public class CSVreader {
 		}
 		int output = -1;
 		output = mapeado.get(mun);
-		System.out.println("El código de: " + mun + " es: " + output);
 		return output;
 	}
 	
@@ -49,9 +48,8 @@ public class CSVreader {
 		s = OsPaths.cleanPath(s);
 		Path inputPath = Paths.get(s);
 		List<String> inputData = Files.readAllLines(inputPath,StandardCharsets.ISO_8859_1);
-		System.out.println("hemos pasado el char encoding");
 		for (String linea : inputData) {
-			String[] splited = linea.split(";");
+			String[] splited = linea.split(",");
 			if(splited[0].compareTo("CODAUTO")!=0 && splited[4].compareTo(mun)==0) {
 				return splited[5];
 			}

@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import com.google.gson.JsonObject;
 
 import controller.ManejaDB;
@@ -57,12 +59,12 @@ public class Main {
 	public static String buffer;
 	
 	public static void main(String[] args) {
+		
 		OL = new OutputLog();
 		readSys();
 		
 		configFile = ConfigFileHandler.checkConfigFile();
 
-		
 		cargarDataBase();
 		
 		mW = new Main_Window();
@@ -76,14 +78,9 @@ public class Main {
 		loadDefaultMun(defaultMun);
 		
 		mW.setVisible(true);
-
 		
 		if(configFile==null) {
 			pW.setVisible(true);
-		}
-		
-		if(buffer!=null) {
-			mW.setScreen(buffer);
 		}
 		
 	}
@@ -121,7 +118,8 @@ public static void loadDefaultMun(String mun) {
 		try {
 			munCode = CSVreader.munCode(mun);
 		} catch (Exception e1) {
-			Main.mW.setlbl_Output("No se ha encontrado la ciudad " + mun);
+			JOptionPane.showMessageDialog(null, "No se ha encontrado la ciudad "+mun,"KaS-Weather", JOptionPane.ERROR_MESSAGE);
+			OL.outputText("No se ha encontrado la ciudad "+mun);
 			e1.printStackTrace();
 		}
 		if(munCode!=-1) {
@@ -138,7 +136,8 @@ public static void loadDefaultMun(String mun) {
 				}
 				
 			} else {
-				Main.mW.setlbl_Output("Estos datos no estan disponbles en este momento.");
+				JOptionPane.showMessageDialog(null, "Estos datos no estan disponibles en este momento","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+				OL.outputText("Estos datos no estan disponibles en este momento");
 			}
 		}
 		

@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 
+import javax.swing.JOptionPane;
+
 public class OutputLog {
 	
 	private static File log;
@@ -21,6 +23,7 @@ public class OutputLog {
 				log.createNewFile();
 				System.err.println("Se ha creado el archivo log.txt");
 			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Ha ocurrido un error tratando de crear el archivo log","KaS-Weather", JOptionPane.ERROR_MESSAGE);
 				System.out.println("No se ha podido crear el archivo log.txt");
 				e.printStackTrace();
 			}
@@ -30,6 +33,7 @@ public class OutputLog {
 			OutputLog.output = new FileWriter(log,true);
 			System.out.println("Se ha configurado la salida log.");
 		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Ha ocurrido un error tratando de configurar la salida de texto","KaS-Weather", JOptionPane.ERROR_MESSAGE);
 			System.out.println("No se ha podido configurar la salida de texto.");
 			e.printStackTrace();
 		}
@@ -51,7 +55,6 @@ public class OutputLog {
 			output.append(date+":\n"+s+"\n");
 			output.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -6,40 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-
-import controller.Request;
 import main.Main;
-import utilities.CSVreader;
-import utilities.Format;
-import utilities.JsonHandler;
-
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.util.Iterator;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import java.awt.Color;
-import javax.swing.ScrollPaneConstants;
 import java.awt.Toolkit;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 import javax.swing.JComboBox;
 
 public class Main_Window extends JFrame {
@@ -49,7 +29,6 @@ public class Main_Window extends JFrame {
 	private JPanel contentPane;
 	private JScrollPane screen;
 	private JTable table;
-	private JLabel lbl_output;
 	private JList<String> list;
 	private List<String> tablas;
 	private DefaultTableModel tableModel = new DefaultTableModel();
@@ -125,13 +104,6 @@ public class Main_Window extends JFrame {
 		table = new JTable(tableModel);
 		tableContainer.setViewportView(table);
 		
-		lbl_output = new JLabel("");
-		lbl_output.setBounds(10, 273, 699, 25);
-		contentPane.add(lbl_output);
-		lbl_output.setOpaque(true);
-		lbl_output.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_output.setBackground(Color.WHITE);
-		
 		JButton btnDelMun = new JButton("Eliminar municipio");
 		btnDelMun.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -187,9 +159,6 @@ public class Main_Window extends JFrame {
 		mostrarMun.removeItemAt(index);
 	}
 	
-	public void setlbl_Output(String text) {
-		lbl_output.setText(text);
-	}
 	
 	public void mostrarView(String selectedView, String mun) {
 		List<String> viewContent = Main.mDB.showFromMun(selectedView, mun);
@@ -234,11 +203,4 @@ public class Main_Window extends JFrame {
 		}
 	}
 
-	/**
-	 * This method displays a string in the main window screen.
-	 * @param s
-	 */
-	public void setScreen(String s) {
-		lbl_output.setText(s);
-	}
 }

@@ -6,6 +6,8 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 import com.google.gson.JsonObject;
 
 import kong.unirest.GetRequest;
@@ -13,6 +15,7 @@ import kong.unirest.Header;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
+import main.Main;
 import utilities.JsonHandler;
 
 /**
@@ -67,6 +70,8 @@ public class Request {
 			}
 			return rawData;
 		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Se ha producido un error tratando de obtener los datos del servidor","KaS-Weather", JOptionPane.ERROR_MESSAGE);
+			Main.OL.outputText("Se ha producido un error tratando de obtener los datos del servidor");
 			System.out.println("Se ha producido un error tratando de obtener los datos del servidor.");
 		}
 		return null;
