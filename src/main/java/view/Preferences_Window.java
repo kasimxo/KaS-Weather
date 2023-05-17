@@ -16,12 +16,18 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.Color;
+import java.awt.Desktop;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.JTextPane;
 
 public class Preferences_Window extends JFrame {
 
@@ -34,6 +40,7 @@ public class Preferences_Window extends JFrame {
 	private JLabel lblDisplayPrefered;
 	private JButton btnGuardar;
 	private JPanel displayWarning;
+	private JButton btnNavegar;
 
 	/**
 	 * Launch the application.
@@ -135,6 +142,34 @@ public class Preferences_Window extends JFrame {
 			}
 		});
 		displayWarning.add(btnCrear);
+		
+		btnNavegar = new JButton("GitHub");
+		btnNavegar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+		            if (Desktop.isDesktopSupported()) {
+		                Desktop desktop = Desktop.getDesktop();
+		                if (desktop.isSupported(Desktop.Action.BROWSE)) {
+		                	String url = "https://github.com/kasimxo/KaS-Weather";
+		                    desktop.browse(URI.create(url));
+		                }
+		            }
+		        } catch (IOException IOe) {
+		            IOe.printStackTrace();
+		        } catch (InternalError eI) {
+		        	eI.printStackTrace();
+		        }
+				
+			}
+		});
+		btnNavegar.setBounds(321, 135, 89, 90);
+		contentPane.add(btnNavegar);
+		
+		JTextPane txtDisclaimer = new JTextPane();
+		txtDisclaimer.setEditable(false);
+		txtDisclaimer.setText("KaS-Weather es un programa Open Source desarrollado por un estudiante de DAW.\n\nPuedes ver el codigo fuente en GitHub.");
+		txtDisclaimer.setBounds(20, 135, 274, 90);
+		contentPane.add(txtDisclaimer);
 		btnGuardar.setVisible(false);
 	}
 }
