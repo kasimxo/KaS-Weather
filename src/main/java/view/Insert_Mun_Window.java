@@ -96,10 +96,13 @@ public class Insert_Mun_Window extends JFrame {
 					txt_input.setText("");
 					JsonHandler.toDataBase();
 					Main.mW.actualizarMun();
+					Main.mW.mostrarView("TEMPERATURA", mun);
 				} else {
 					Main.mW.setlbl_Output("Introduce el nombre de un municipio.");
 				}
 				setVisible(false);
+				
+				
 			}
 		});
 		btn_send.setBounds(40, 137, 100, 25);

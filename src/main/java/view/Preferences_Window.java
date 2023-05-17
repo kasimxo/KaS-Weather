@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import main.Main;
+import utilities.ConfigFileHandler;
 
 import javax.swing.JLabel;
 import java.awt.Toolkit;
@@ -32,6 +33,7 @@ public class Preferences_Window extends JFrame {
 	private JLabel lblPrefered;
 	private JLabel lblDisplayPrefered;
 	private JButton btnGuardar;
+	private JPanel displayWarning;
 
 	/**
 	 * Launch the application.
@@ -69,7 +71,8 @@ public class Preferences_Window extends JFrame {
 		lblDisplayPrefered.setBounds(20, 68, 130, 25);
 		contentPane.add(lblDisplayPrefered);
 		
-		lblPrefered = new JLabel("Ninguno");
+		String configMun = ConfigFileHandler.readDefaultMun();
+		lblPrefered = new JLabel(configMun);
 		lblPrefered.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPrefered.setOpaque(true);
 		lblPrefered.setBackground(Color.WHITE);
@@ -80,7 +83,7 @@ public class Preferences_Window extends JFrame {
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				/**
-				 * Aquí hacemos visibles los otros elementos
+				 * Aquï¿½ hacemos visibles los otros elementos
 				 */
 				textMod.setVisible(true);
 				btnGuardar.setVisible(true);
@@ -98,17 +101,18 @@ public class Preferences_Window extends JFrame {
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String newMun = textMod.getText();
+				textMod.setText("");
+				lblPrefered.setText(newMun);
+				ConfigFileHandler.setMunInConfigFile(Main.configFile, newMun);
 				textMod.setVisible(false);
 				btnGuardar.setVisible(false);
-				/* 
-				 * Aquí tenemos que ir al archivo config y sobreescribir el valor
-				 * */
 			}
 		});
 		btnGuardar.setBounds(321, 104, 89, 23);
 		contentPane.add(btnGuardar);
 		
-		JPanel displayWarning = new JPanel();
+		displayWarning = new JPanel();
 		displayWarning.setBackground(new Color(249, 213, 213));
 		displayWarning.setBounds(20, 10, 390, 49);
 		contentPane.add(displayWarning);
@@ -121,27 +125,16 @@ public class Preferences_Window extends JFrame {
 		lblMsg.setFont(new Font("Tahoma", Font.BOLD, 11));
 		displayWarning.add(lblMsg);
 		
-		JButton btnNewButton = new JButton("Buscar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnCrear = new JButton("Crear");
+		btnCrear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser jf = new JFileChooser(new File("").getAbsolutePath()+"/src/main/java/");
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos config", "txt", ".txt");
-				jf.setFileFilter(filter);
-				jf.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				jf.setDialogTitle("Seleccionar archivo preferencias");
-				jf.setAcceptAllFileFilterUsed(false);
-				if (jf.showOpenDialog(Main.pW) == JFileChooser.APPROVE_OPTION) { 
-				      System.out.println("getCurrentDirectory(): " 
-				         +  jf.getCurrentDirectory());
-				      System.out.println("getSelectedFile() : " 
-				         +  jf.getSelectedFile());
-			    } else {
-				      System.out.println("No Selection ");
-			    }
-			   
+				String mun = lblPrefered.getText();
+				Main.configFile=ConfigFileHandler.createConfigFile();
+				ConfigFileHandler.setMunInConfigFile(Main.configFile, mun);
+				displayWarning.setVisible(false);
 			}
 		});
-		displayWarning.add(btnNewButton);
+		displayWarning.add(btnCrear);
 		btnGuardar.setVisible(false);
 	}
 }

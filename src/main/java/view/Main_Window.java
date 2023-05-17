@@ -191,7 +191,7 @@ public class Main_Window extends JFrame {
 		lbl_output.setText(text);
 	}
 	
-	private void mostrarView(String selectedView, String mun) {
+	public void mostrarView(String selectedView, String mun) {
 		List<String> viewContent = Main.mDB.showFromMun(selectedView, mun);
 		String[] headers = viewContent.get(0).split(" ");
 		tableModel.setRowCount(viewContent.size()-1);

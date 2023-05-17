@@ -33,7 +33,6 @@ public class ManejaDB {
 	private boolean newDataBase;
 	
 	public ManejaDB() throws IOException, SQLException {
-		String defaultMun = ConfigFileHandler.readDefaultMun();
 		this.newDataBase=false;
 		checkActualDataBase();
 		String pathDataBase = new File("").getAbsolutePath()+"/src/main/java/dataBase/"+dataBaseName;
@@ -43,6 +42,8 @@ public class ManejaDB {
 		if(newDataBase) {
 			createDataBaseSchema();
 		}
+		Main.defaultMun = ConfigFileHandler.readDefaultMun();
+		
 	}
 	/**
 	 * This method will insert the values given in a String into the specified table.
@@ -257,7 +258,8 @@ public class ManejaDB {
 				for(int i = 1; i<=columnsNumber; i++)  {
 					String resultado = result.getObject(i)+" ";
 					linea +=resultado;
-				}
+				}		
+
 				table.add(linea);
 			}
 			

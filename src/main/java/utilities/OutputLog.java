@@ -27,7 +27,7 @@ public class OutputLog {
 		}
 		
 		try {
-			OutputLog.output = new FileWriter(log);
+			OutputLog.output = new FileWriter(log,true);
 			System.out.println("Se ha configurado la salida log.");
 		} catch (IOException e) {
 			System.out.println("No se ha podido configurar la salida de texto.");
