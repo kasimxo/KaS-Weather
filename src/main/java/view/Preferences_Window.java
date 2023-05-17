@@ -164,12 +164,13 @@ public class Preferences_Window extends JFrame {
 		});
 		btnNavegar.setBounds(321, 135, 89, 90);
 		contentPane.add(btnNavegar);
-		
+
 		JTextPane txtDisclaimer = new JTextPane();
 		txtDisclaimer.setEditable(false);
 		txtDisclaimer.setText("KaS-Weather es un programa Open Source desarrollado por un estudiante de DAW.\n\nPuedes ver el codigo fuente en GitHub.");
 		txtDisclaimer.setBounds(20, 135, 274, 90);
 		contentPane.add(txtDisclaimer);
+
 		btnGuardar.setVisible(false);
 	}
 }
