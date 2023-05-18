@@ -62,8 +62,12 @@ public class Preferences_Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Preferences_Window() {
+		try {
+			setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
+		} catch (Exception E) {
+			System.out.println("Un error encontrando la imagen");
+		}
 		setTitle("Preferencias");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Preferences_Window.class.getResource("/resources/icon.png")));
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		int x = (int) (Main.width/2) - width/2;
 		int y = (int) (Main.height/2)- height/2;

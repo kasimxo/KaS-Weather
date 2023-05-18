@@ -122,3 +122,61 @@ Wed May 17 19:27:41 CEST 2023:
 Ya se habia hecho esa consulta hoy
 Wed May 17 19:27:41 CEST 2023:
 Se han insertado todos los datos en la base de datos
+Thu May 18 10:09:50 CEST 2023:
+Se ha eliminado el archivo Wed172023.db.
+Thu May 18 10:09:50 CEST 2023:
+No se ha encontrado la base de datos.
+Thu May 18 10:09:50 CEST 2023:
+Se ha creado la base de datos.
+Thu May 18 10:09:56 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Thu May 18 10:09:56 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 10:10:21 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 10:10:22 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Thu May 18 10:10:22 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 11:30:05 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:30:23 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:32:54 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:34:00 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:34:01 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Thu May 18 11:34:01 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 11:34:32 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:34:35 CEST 2023:
+Se ha producido un error leyendo la respuesta del servidor
+Thu May 18 11:34:35 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 11:39:25 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:39:26 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Thu May 18 11:39:26 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 11:42:28 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:42:29 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Thu May 18 11:42:29 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 11:43:00 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:43:01 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Thu May 18 11:43:01 CEST 2023:
+Se han insertado todos los datos en la base de datos
+Thu May 18 11:43:27 CEST 2023:
+Se ha cargado la base de datos con exito.
+Thu May 18 11:43:28 CEST 2023:
+Ya se habia hecho esa consulta hoy
+Thu May 18 11:43:28 CEST 2023:
+Se han insertado todos los datos en la base de datos

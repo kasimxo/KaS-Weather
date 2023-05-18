@@ -58,7 +58,11 @@ public class Main_Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Main_Window() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
+		try {
+			setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
+		} catch (Exception E) {
+			System.out.println("Un error encontrando la imagen");
+		}
 		setTitle("KaS-Weather");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		int x = (int) (Main.width/2) - width/2;

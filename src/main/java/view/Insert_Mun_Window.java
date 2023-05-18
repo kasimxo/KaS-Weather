@@ -50,7 +50,11 @@ public class Insert_Mun_Window extends JFrame {
 	 * Create the frame.
 	 */
 	public Insert_Mun_Window() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Insert_Mun_Window.class.getResource("/resources/icon.png")));
+		try {
+			setIconImage(Toolkit.getDefaultToolkit().getImage(Main_Window.class.getResource("/resources/icon.png")));
+		} catch (Exception E) {
+			System.out.println("Un error encontrando la imagen");
+		}
 		setTitle("Insertar municipio");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		int x = (int) (Main.width/2) - width/2;
